@@ -1,0 +1,25 @@
+.editProfile{
+	text-align: right;
+}
+
+.profile{
+	margin-top: 5%;
+	width: 100vw;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+
+}
+
+.profilePic{
+	width: 400px;
+}
+
+.details{
+	width: 350px;
+}
+
+.info{
+	font-size: 30px;
+}
