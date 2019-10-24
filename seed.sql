@@ -6,15 +6,6 @@ WHERE users.id = 1;
 
 
 
--- Getting case, group and user info for Case Page
-SELECT cases.id AS case_id, cases.name, age, contact, groups.id AS group_id, group_name, users.name AS user_name, users.id
-FROM cases LEFT JOIN groups
-ON (cases.id = groups.case_id)
-LEFT JOIN users
-ON (users.id = cases.users_id)
-WHERE cases.id = 1
-
-
 -- Getting case, group, preferences, and user info for Case Page
 SELECT cases.id AS case_id, cases.name, age, contact, groups.id AS group_id, group_name, users.name AS user_name, users.id, likes, dislikes
 FROM cases LEFT JOIN groups
@@ -24,8 +15,6 @@ ON (users.id = cases.users_id)
 LEFT JOIN preferences
 ON (cases.id = preferences.case_id)
 WHERE cases.id = 1
-
-
 
 
 

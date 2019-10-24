@@ -16,7 +16,7 @@ class Home extends React.Component {
 
         });
     } else {
-        cases = <p>You have no cases yet, let's create one!</p>
+        cases = <p>You have no files yet, let's create one!</p>
     }
 
     return (
@@ -53,14 +53,14 @@ class Home extends React.Component {
           </div>
 
           <div className="cases container">
-                <h2 className="mt-5"><u>Cases</u></h2>
+                <h2 className="mt-5"><u>Your Files</u></h2>
                 <div>
                     {cases}
                 </div>
           </div>
 
           <div className="createCase mt-5 mb-4 row justify-content-center">
-                <a href="/caseCreate" class="btn btn-primary">Create Case</a>
+                <a href="/caseCreate" class="btn btn-primary">Create File</a>
           </div>
 
 

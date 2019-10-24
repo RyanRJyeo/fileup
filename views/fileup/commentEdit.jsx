@@ -1,9 +1,13 @@
 var React = require("react");
 
-class CaseCreate extends React.Component {
+class CommentEdit extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
+
+    let created = this.props.results[0].created_at;
+    let date = `${created.getFullYear()}/${created.getMonth() + 1}/${created.getDate()}`;
+    let time = `${created.getHours()}:` + `${created.getMinutes()}:${created.getSeconds()}`;
 
     return (
       <html>
@@ -17,22 +21,27 @@ class CaseCreate extends React.Component {
 
             <Navbar/>
 
-            <h1 className="display-4 text-center mt-5">Create Case File</h1>
+            <h1 className="text-center mt-5">Edit Comment: {this.props.results[0].user_name}</h1>
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action='/caseCreate'>
+                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/commentEdit"}>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" readonly="true" name="users_id" value={this.props.results[0].id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="comment_id" value={this.props.results[0].id} required/>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="case_id" value={this.props.results[0].case_id} required/>
                   </div>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" name="age" placeholder="Age" required/>
+                    <p>Created at:</p>
+                    <input type="text" className="form-control rounded" readonly="true" name="created_at" value={date + "   ("+ time + ")"} required/>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" maxlength="20" required/>
+                    <p>Previous Comment:</p>
+                    <textarea type="text" rows="9" className="form-control rounded" name="previous_comment" value={this.props.results[0].content} readonly="true" required></textarea>
                   </div>
-                  <button type="submit" className="btn btn-primary">Create This File</button>
+                  <div className="form-group">
+                    <textarea type="text" rows="9" className="form-control rounded" name="new_comment" placeholder="Edit comment here" required></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-primary mb-5">Edit Comment</button>
                 </form>
             </div>
 
@@ -46,4 +55,4 @@ class CaseCreate extends React.Component {
   }
 }
 
-module.exports = CaseCreate;
+module.exports = CommentEdit;

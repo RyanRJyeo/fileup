@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS comments(
 	case_id INTEGER,
 	user_name TEXT,
 	content TEXT,
-	created_at TIMESTAMPTZ DEFAULT now()
+	created_at TIMESTAMPTZ DEFAULT now(),
+	updated_at TEXT
 );
 
 

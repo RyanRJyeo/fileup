@@ -216,6 +216,38 @@ module.exports = (dbPoolInstance) => {
 
 
 
+
+  let getCaseDeleted = (case_id, callback) => {
+
+    let inputValues = [case_id];
+
+    let query = "DELETE FROM cases WHERE id = ($1)"
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+
   let getCaseEdited = (requestCaseID, requestUserID, requestName, requestAge, requestContact, callback) => {
 
     let inputValues = [requestCaseID, requestUserID, requestName, requestAge, requestContact];
@@ -242,9 +274,6 @@ module.exports = (dbPoolInstance) => {
       }
     });
   };
-
-
-
 
 
 
@@ -301,10 +330,6 @@ module.exports = (dbPoolInstance) => {
 
 
 
-
-
-
-
   let getGroup = (groupName, case_id, callback) => {
 
     let inputValues = [groupName, case_id];
@@ -357,8 +382,6 @@ module.exports = (dbPoolInstance) => {
 
 
 
-
-
   let getComments= (requestCaseID, callback) => {
 
     let inputValues = [requestCaseID];
@@ -386,13 +409,6 @@ module.exports = (dbPoolInstance) => {
       }
     });
   };
-
-
-
-
-
-
-
 
 
 
@@ -428,6 +444,98 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getCommentEditPage = (comment_id, callback) => {
+
+    let inputValues = [comment_id];
+
+    let query = "SELECT * FROM comments WHERE id = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getCommentEdited = (comment_id, new_comment, updated_at, callback) => {
+
+    let inputValues = [comment_id, new_comment, updated_at];
+    console.log(inputValues)
+
+    let query = "UPDATE comments SET content = ($2), updated_at = ($3) WHERE id = ($1) RETURNING *";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+  let getCommentDeleted = (comment_id, callback) => {
+
+    let inputValues = [comment_id];
+
+    let query = "DELETE FROM comments WHERE id = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
 
   return {
     getRegister,
@@ -437,10 +545,14 @@ module.exports = (dbPoolInstance) => {
     getUserID,
     getCaseAdded,
     getCase,
+    getCaseDeleted,
     getCaseEdited,
     getPreferenceEdited,
     getGroup,
     getComments,
     getCommentsAdded,
+    getCommentEditPage,
+    getCommentEdited,
+    getCommentDeleted,
   };
 };

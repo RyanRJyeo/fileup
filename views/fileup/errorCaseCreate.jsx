@@ -35,7 +35,7 @@ class CaseCreate extends React.Component {
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" required/>
                   </div>
-                  <button type="submit" className="btn btn-primary">Create This Case</button>
+                  <button type="submit" className="btn btn-primary">Create This File</button>
                 </form>
             </div>
 

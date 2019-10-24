@@ -48,17 +48,59 @@ class Case extends React.Component {
     let comments;
     if (this.props.res){
         comments = this.props.res.map(x=>{
+            let comment_id = parseInt(x.id);
+            let case_id = x.case_id;
             let name = x.user_name;
             let content = x.content;
             let created = x.created_at;
             let date = `${created.getFullYear()}/${created.getMonth() + 1}/${created.getDate()}`;
             let time = `${created.getHours()}:` + `${created.getMinutes()}:${created.getSeconds()}`;
+            let updated_at;
+            if(x.updated_at){
+                let updating = new Date(x.updated_at)
+                console.log("updated at is "+ updating)
+                let upDate = `${updating.getFullYear()}/${updating.getMonth() + 1}/${updating.getDate()}`;
+                let upTime = `${updating.getHours()}:` + `${updating.getMinutes()}:${updating.getSeconds()}`;
+                updated_at =    <div>
+                                    <span className="lead mr-4">Updated by {name}</span><span className="mr-2">{upDate}</span><span>{upTime}</span>
+                                </div>
+            } else {
+                updated_at = null;
+            }
+
+
 
             return  <div className="jumbotron jumbotron-fluid">
                         <div className="container">
                             <span className="lead mr-4">Commented by {name}</span><span className="mr-2">{date}</span><span>{time}</span>
+                            {updated_at}
                             <hr className="my-4"/>
                             <p className="comments">{content}</p>
+                                <div className="row">
+                                    <div className="col">
+                                        <a class="btn btn-outline-primary btn-sm mt-3 mr-5" href={"/case/" + comment_id + "/commentEdit"}>Edit</a>
+                                        <a class="btn btn-outline-danger btn-sm mt-3" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Delete</a>
+                                        <div class="col">
+                                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                              <div class="card card-body mt-3">
+                                                <p>Are you sure you want to delete this comment?</p>
+                                                <p>It will be permanently removed from the database</p>
+
+                                                <form className="col align-self-center" method='POST' action='/case/commentDelete'>
+                                                    <div className="form-group">
+                                                        <input type="number" className="form-control rounded d-none" name="comment_id" value={comment_id} readonly="true" required/>
+                                                    </div>
+                                                    <div className="form-group">
+                                                        <input type="number" className="form-control rounded d-none" name="case_id" value={case_id} readonly="true" required/>
+                                                    </div>
+                                                    <button type="submit" className="btn btn-outline-danger btn-sm">Delete Comment</button>
+                                                </form>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                         </div>
                     </div>
         })
@@ -66,7 +108,7 @@ class Case extends React.Component {
 
 
     } else {
-        comments = <p className="text-center mt-5">No comments for this case yet</p>
+        comments = <p className="text-center mt-5">No comments for this file yet</p>
     }
 
 
@@ -118,7 +160,7 @@ class Case extends React.Component {
                             <div class="modal-body">
                                 <form className="col align-self-center" method='POST' action='/case'>
                                     <div className="form-group">
-                                        <input type="number" className="form-control rounded" name="case_id" value={this.props.results[0].case_id} readonly="true" required/>
+                                        <input type="number" className="form-control rounded d-none" name="case_id" value={this.props.results[0].case_id} readonly="true" required/>
                                     </div>
                                     <div className="form-group">
                                         <input type="text" className="form-control rounded" name="group" placeholder="Group Name" maxlength="20" required/>
@@ -155,17 +197,19 @@ class Case extends React.Component {
                     </form>
                 </div>
 
-
                 <div className="container deleteButton text-right mb-5">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Delete This Case
+                    <button class="btn btn-outline-danger" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Delete File
                     </button>
 
                     <div class="collapse text-left" id="collapseExample">
-                        <div class="card card-body">
-                            <p>Are you sure you want to delete this case?</p>
+                        <div class="card card-body mt-2">
+                            <p>Are you sure you want to delete this file?</p>
                             <p>It will be permanently removed from the database</p>
-                            <button type="submit" className="btn btn-outline-primary btn-sm">Delete Case</button>
+                            <form method='POST' action={"/case/" + this.props.results[0].case_id + "/delete"}>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true" required/>
+                                <button type="submit" className="btn btn-outline-danger btn-sm">Yes Delete Permanently</button>
+                            </form>
                         </div>
                     </div>
                 </div>
