@@ -28,16 +28,18 @@ CREATE TABLE IF NOT EXISTS cases(
 
 CREATE TABLE IF NOT EXISTS preferences(
 	id SERIAL PRIMARY KEY,
-	case_id INTEGER,
-	likes VARCHAR(40),
-	dislikes VARCHAR(40)
+	case_id INTEGER UNIQUE,
+	likes TEXT,
+	dislikes TEXT
 );
 
 
 CREATE TABLE IF NOT EXISTS comments(
 	id SERIAL PRIMARY KEY,
 	case_id INTEGER,
-	content TEXT
+	user_name TEXT,
+	content TEXT,
+
 );
 
 

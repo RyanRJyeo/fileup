@@ -1,6 +1,6 @@
 var React = require("react");
 
-class CaseEdit extends React.Component {
+class PreferenceEdit extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
@@ -17,26 +17,19 @@ class CaseEdit extends React.Component {
 
             <Navbar/>
 
-            <h1 className="text-center mt-5">Edit: {this.props.results[0].name}</h1>
+            <h1 className="text-center mt-5">Edit Preference: {this.props.results[0].name}</h1>
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/edit"}>
+                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/preference"}>
                     <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="id" value={this.props.results[0].case_id} readonly="true"  required/>
+                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true"  required/>
                     </div>
                     <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="users_id" value={this.props.results[0].id} readonly="true"  required/>
+                        <p>Likes:</p>
+                        <textarea type="text" rows="6" className="form-control rounded" name="likes" placeholder="likes" required></textarea>
                     </div>
                     <div className="form-group">
-                        <p>Name:</p>
-                        <input type="text" className="form-control rounded" name="name" placeholder={this.props.results[0].name} required/>
-                    </div>
-                    <div className="form-group">
-                        <p>Age:</p>
-                        <input type="number" className="form-control rounded" name="age" placeholder={this.props.results[0].age} required/>
-                    </div>
-                   <div className="form-group">
-                        <p>Contact Number:</p>
-                        <input type="text" className="form-control rounded" name="contact" placeholder={this.props.results[0].contact} required/>
+                        <p>Dislikes:</p>
+                        <textarea type="text" rows="6" className="form-control rounded" name="dislikes" placeholder="dislikes" required></textarea>
                     </div>
                     <button type="submit" className="btn btn-primary">Save</button>
                 </form>
@@ -52,4 +45,4 @@ class CaseEdit extends React.Component {
   }
 }
 
-module.exports = CaseEdit;
+module.exports = PreferenceEdit;

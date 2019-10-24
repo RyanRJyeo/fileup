@@ -53,37 +53,7 @@ class Home extends React.Component {
           </div>
 
           <div className="cases container">
-                <h2 className="mt-5"><u>Cases with Groups</u></h2>
-                <div>
-
-                    <a class="nav-link dropdown-toggle lead d-inline-block" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Students
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="/paymentPage">Name</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="/senderTotal">Name</a>
-                    </div>
-
-                    <a class="nav-link dropdown-toggle lead d-inline-block" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Parents
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="/paymentPage">Name</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="/senderTotal">Name</a>
-                    </div>
-
-                    <a class="nav-link dropdown-toggle lead d-inline-block" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Low Priority
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="/paymentPage">Name</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="/senderTotal">Name</a>
-                    </div>
-                </div>
-                <h2 className="mt-5"><u>Cases without Groups</u></h2>
+                <h2 className="mt-5"><u>Cases</u></h2>
                 <div>
                     {cases}
                 </div>

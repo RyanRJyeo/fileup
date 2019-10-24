@@ -54,6 +54,20 @@ module.exports = (db) => {
 
 
 
+//============================================================
+  let logoutCC = (request, response) => {
+
+    response.clearCookie('user_id', { path: '/' });
+    response.clearCookie('username', { path: '/' });
+    response.clearCookie('hasLoggedIn', { path: '/' });
+
+    response.redirect('/');
+
+  };
+//============================================================
+
+
+
 
 //============================================================
   let loginUserCC = (request, response) => {
@@ -96,7 +110,14 @@ module.exports = (db) => {
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getHome(user_id, (error, results) => {
-                response.render('fileup/index', {results});
+                db.fileup.getGroups(user_id, (err, res)=>{
+                    let data = {
+                        results: results,
+                        res: res
+                    }
+                    console.log(data);
+                    response.render('fileup/index', data);
+                });
           });
         } else {
             response.redirect('/login');
@@ -164,8 +185,14 @@ module.exports = (db) => {
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getCase(requestCaseID, (error, results) => {
-                console.log(results);
-                response.render('fileup/case', {results});
+                let verifyUser = parseInt(results[0].id);
+                let verifyUser2 = parseInt(user_id);
+                if (verifyUser === verifyUser2){
+                    response.render('fileup/case', {results});
+                } else {
+                    response.redirect('/');
+                }
+
           });
         } else {
             response.redirect('/login');
@@ -181,21 +208,46 @@ module.exports = (db) => {
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
+    let requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            response.render('fileup/caseEdit');
-
-
-          //   db.fileup.getHome(user_id, (error, results) => {
-
-          //   response.render('fileup/caseEdit');
-          // });
+            db.fileup.getCase(requestCaseID, (error, results) => {
+                let verifyUser = parseInt(results[0].id);
+                let verifyUser2 = parseInt(user_id);
+                if (verifyUser === verifyUser2){
+                    response.render('fileup/caseEdit', {results});
+                } else {
+                    response.redirect('/');
+                };
+            });
         } else {
             response.redirect('/login');
         };
   };
 //============================================================
 
+
+
+//============================================================
+  let caseEditingCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            let requestCaseID = request.body.id;
+            let requestUserID = request.body.users_id;
+            let requestName = request.body.name;
+            let requestAge = request.body.age;
+            let requestContact = request.body.contact;
+            db.fileup.getCaseEdited(requestCaseID, requestUserID, requestName, requestAge, requestContact, (error, results) => {
+                response.redirect('/case/'+requestCaseID);
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
 
 
 
@@ -223,6 +275,55 @@ module.exports = (db) => {
 
 
 
+//============================================================
+  let preferenceCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+    let requestCaseID = request.params.id
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            db.fileup.getCase(requestCaseID, (error, results) => {
+                let verifyUser = parseInt(results[0].id);
+                let verifyUser2 = parseInt(user_id);
+                if (verifyUser === verifyUser2){
+                    response.render('fileup/preferenceEdit', {results});
+                } else {
+                    response.redirect('/');
+                };
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+//============================================================
+  let preferenceEditCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+    let requestCaseID = request.params.id
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            let case_id = request.body.case_id;
+            let likes = request.body.likes;
+            let dislikes = request.body.dislikes;
+
+            db.fileup.getPreferenceEdited(case_id, likes, dislikes, (error, results) => {
+                response.redirect('/case/'+case_id);
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
 
   /**
    * ===========================================
@@ -233,13 +334,17 @@ module.exports = (db) => {
     register: registerCC,
     registerUser: registerUserCC,
     login: loginCC,
+    logout: logoutCC,
     loginUser: loginUserCC,
     home: homeCC,
     caseCreate: caseCreateCC,
     addInCase: addInCaseCC,
     case: caseCC,
     caseEdit: caseEditCC,
+    caseEditing: caseEditingCC,
     addGroup: addGroupCC,
+    preference: preferenceCC,
+    preferenceEdit: preferenceEditCC,
   };
 
 }

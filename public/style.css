@@ -23,3 +23,9 @@
 .info{
 	font-size: 30px;
 }
+
+.preferenceContent{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	width: 80%;
+}
