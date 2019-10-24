@@ -5,19 +5,71 @@ class Case extends React.Component {
 
     let Navbar = require('./navbar.jsx');
 
-    let button;
+    let groupButton;
 
     if (this.props.results[0].group_name){
-        button =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+        groupButton =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                       Edit Group
                     </button>
     } else {
-        button =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+        groupButton =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
                       Add Group
                     </button>
     }
 
-    console.log(this.props.results);
+
+    let preferenceContent;
+    let preferenceButton;
+
+    if (this.props.results[0].likes){
+        preferenceContent = <tbody>
+                                <tr>
+                                    <th scope="col-6">Likes</th>
+                                    <td className="preferenceContent">{this.props.results[0].likes}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col-6">Disikes</th>
+                                    <td className="preferenceContent">{this.props.results[0].dislikes}</td>
+                                </tr>
+                            </tbody>
+
+        preferenceButton =  <div className="row justify-content-center">
+                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.results[0].case_id + "/preference"}>Edit Preferences</a>
+                            </div>
+    } else {
+        preferenceContent = <p className="text-center mt-5">Preferences have not been set yet</p>
+
+        preferenceButton =  <div className="row justify-content-center">
+                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.results[0].case_id + "/preference"}>Add Preferences</a>
+                            </div>
+    }
+
+
+    let comments;
+    if (this.props.res){
+        comments = this.props.res.map(x=>{
+            let name = x.user_name;
+            let content = x.content;
+            let created = x.created_at;
+            let date = `${created.getFullYear()}/${created.getMonth() + 1}/${created.getDate()}`;
+            let time = `${created.getHours()}:` + `${created.getMinutes()}:${created.getSeconds()}`;
+
+            return  <div className="jumbotron jumbotron-fluid">
+                        <div className="container">
+                            <span className="lead mr-4">Commented by {name}</span><span className="mr-2">{date}</span><span>{time}</span>
+                            <hr className="my-4"/>
+                            <p className="comments">{content}</p>
+                        </div>
+                    </div>
+        })
+
+
+
+    } else {
+        comments = <p className="text-center mt-5">No comments for this case yet</p>
+    }
+
+
 
     return (
       <html>
@@ -52,7 +104,7 @@ class Case extends React.Component {
                     <div className="col">
                         <p><u>Group:</u></p>
                         <p className="lead">{this.props.results[0].group_name}</p>
-                        {button}
+                        {groupButton}
                     </div>
                 </div>
 
@@ -80,49 +132,24 @@ class Case extends React.Component {
                 </div>
 
                 <table class="table table-sm text-center mt-5">
-                    <tbody>
-                        <tr>
-                            <th scope="col-6">Likes</th>
-                            <td className="preferenceContent">{this.props.results[0].likes}</td>
-                        </tr>
-                        <tr>
-                            <th scope="col-6">Disikes</th>
-                            <td className="preferenceContent">{this.props.results[0].dislikes}</td>
-                        </tr>
-                    </tbody>
+                    {preferenceContent}
                 </table>
+                {preferenceButton}
 
-                <div className="row justify-content-center">
-                    <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.results[0].case_id + "/preference"}>Edit Preferences</a>
-                </div>
-
-                <div className="comments container mt-5">
+                <div className="container mt-5">
                     <p><u>Comments:</u></p>
 
-                    <div class="jumbotron jumbotron-fluid">
-                        <div class="container">
-                            <span class="lead mr-4">Commented by Lalala</span><span>12/31/2019</span>
-                            <hr class="my-4"/>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        </div>
-                    </div>
+                    {comments}
 
-
-                    <div class="jumbotron jumbotron-fluid">
-                        <div class="container">
-                            <span class="lead mr-4">Commented by Yoyoyo</span><span>49/31/2019</span>
-                            <hr class="my-4"/>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        </div>
-                    </div>
-
-
-                    <form className="col align-self-center" method='POST' action='/register'>
+                    <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/comments"}>
                         <div className="form-group">
                             <div className="form-group">
-                                <input type="text" className="form-control rounded" name="user_name"value={this.props.results[0].user_name} readonly="true" required/>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true" required/>
                             </div>
-                            <textarea type="text" rows="10" className="form-control rounded" name="comments" placeholder="Comment Here" required></textarea>
+                            <div className="form-group">
+                                <input type="text" className="form-control rounded d-none" name="name"value={this.props.results[0].user_name} readonly="true" required/>
+                            </div>
+                            <textarea type="text" rows="10" className="form-control rounded" name="content" placeholder="Comment Here" required></textarea>
                         </div>
                         <button type="submit" className="btn btn-outline-primary btn-sm">Comment</button>
                     </form>

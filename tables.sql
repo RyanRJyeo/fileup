@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS cases(
 	users_id INTEGER,
 	name VARCHAR(20),
 	age INTEGER,
-	contact INTEGER
+	contact VARCHAR(20)
 );
 
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS comments(
 	case_id INTEGER,
 	user_name TEXT,
 	content TEXT,
-
+	created_at TIMESTAMPTZ DEFAULT now()
 );
 
 

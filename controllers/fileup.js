@@ -115,7 +115,6 @@ module.exports = (db) => {
                         results: results,
                         res: res
                     }
-                    console.log(data);
                     response.render('fileup/index', data);
                 });
           });
@@ -187,13 +186,20 @@ module.exports = (db) => {
             db.fileup.getCase(requestCaseID, (error, results) => {
                 let verifyUser = parseInt(results[0].id);
                 let verifyUser2 = parseInt(user_id);
+
                 if (verifyUser === verifyUser2){
-                    response.render('fileup/case', {results});
+                    db.fileup.getComments(requestCaseID, (err, res)=>{
+                            let data= {
+                                results: results,
+                                res: res
+                            }
+                            console.log(data);
+                        response.render('fileup/case', data);
+                    });
                 } else {
                     response.redirect('/');
-                }
-
-          });
+                };
+            });
         } else {
             response.redirect('/login');
         };
@@ -325,6 +331,32 @@ module.exports = (db) => {
 
 
 
+
+//============================================================
+  let commentsCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+    let requestCaseID = request.params.id
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let case_id = request.body.case_id;
+            let name = request.body.name;
+            let comment = request.body.content;
+
+            db.fileup.getCommentsAdded(case_id, name, comment, (error, results) => {
+                response.redirect('/case/'+case_id);
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
   /**
    * ===========================================
    * Export controller functions as a module
@@ -345,6 +377,7 @@ module.exports = (db) => {
     addGroup: addGroupCC,
     preference: preferenceCC,
     preferenceEdit: preferenceEditCC,
+    comments: commentsCC,
   };
 
 }

@@ -24,13 +24,13 @@ class CaseCreate extends React.Component {
                     <input type="number" className="form-control rounded" readonly="true" name="users_id" value={this.props.results[0].id} required/>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="name" placeholder="Name" required/>
+                    <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>
                   </div>
                   <div className="form-group">
                     <input type="number" className="form-control rounded" name="age" placeholder="Age" required/>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" required/>
+                    <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" maxlength="20" required/>
                   </div>
                   <button type="submit" className="btn btn-primary">Create This Case</button>
                 </form>

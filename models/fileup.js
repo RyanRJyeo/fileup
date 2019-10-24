@@ -222,9 +222,6 @@ module.exports = (dbPoolInstance) => {
 
     let query = "UPDATE cases SET name = ($3), age = ($4), contact = ($5) WHERE id = ($1) AND users_id = ($2)";
 
-
-    // 'SELECT cases.id AS case_id, cases.name, age, contact, groups.id AS group_id, group_name, users.name AS user_name, users.id FROM cases LEFT JOIN groups ON (cases.id = groups.case_id) LEFT JOIN users ON (users.id = cases.users_id) WHERE cases.id = ($1)';
-
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
 
@@ -361,6 +358,77 @@ module.exports = (dbPoolInstance) => {
 
 
 
+
+  let getComments= (requestCaseID, callback) => {
+
+    let inputValues = [requestCaseID];
+
+    let query = "SELECT * FROM comments WHERE case_id = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+
+
+
+
+
+
+  let getCommentsAdded = (case_id, name, comment, callback) => {
+
+    let inputValues = [case_id, name, comment];
+
+    let query = "INSERT INTO comments (case_id, user_name, content) VALUES ($1, $2, $3)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+
+
   return {
     getRegister,
     getLogin,
@@ -372,5 +440,7 @@ module.exports = (dbPoolInstance) => {
     getCaseEdited,
     getPreferenceEdited,
     getGroup,
+    getComments,
+    getCommentsAdded,
   };
 };

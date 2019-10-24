@@ -26,6 +26,7 @@ module.exports = (app, allModels) => {
   app.get('/case/:id/edit', controllerCallbacks.caseEdit);
   app.post('/case/:id/edit', controllerCallbacks.caseEditing);
   app.post('/case', controllerCallbacks.addGroup);
+  app.post('/case/:id/comments', controllerCallbacks.comments);
   app.get('/case/:id/preference', controllerCallbacks.preference);
   app.post('/case/:id/preference', controllerCallbacks.preferenceEdit);
   app.get('/', controllerCallbacks.home);

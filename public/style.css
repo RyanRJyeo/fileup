@@ -29,3 +29,8 @@
 	word-wrap: break-word;
 	width: 80%;
 }
+
+.comments{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
