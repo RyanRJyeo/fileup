@@ -32,12 +32,12 @@ class Home extends React.Component {
           <Navbar/>
 
           <div className="editProfile">
-                <button className="btn btn-primary btn-sm mr-3 mt-3" >Edit</button>
+                <a className="btn btn-primary btn-sm mr-3 mt-3" href="/profileEdit" >Edit</a>
           </div>
           <div className="profile">
-                <img className="img-thumbnail profilePic"src={this.props.results[0].image}/>
+                <img className="img-thumbnail profilePic mb-5"src={this.props.results[0].image}/>
                 <div className="details">
-                    <section className="text-center mt-5">
+                    <section className="text-center">
                         <p><u>Name:</u></p>
                         <p className="lead info">{this.props.results[0].user_name}</p>
                     </section>

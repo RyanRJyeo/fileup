@@ -5,7 +5,9 @@ const sha256 = require('js-sha256');
 
 module.exports = (db) => {
 
-    let SALT = "23891289814893748274723470234809"
+    let SALT = process.env.SALT
+    // let SALT = "23891289814893748274723470234809"
+    let tempUser;
 
   /**
    * ===========================================
@@ -15,8 +17,11 @@ module.exports = (db) => {
 
 //============================================================
   let registerCC = (request, response) => {
-
-    response.render('fileup/register');
+    let data={
+        username: tempUser
+    }
+    setTimeout(function(){tempUser = null}, 200);
+    response.render('fileup/register', data);
 
   };
 //============================================================
@@ -33,6 +38,8 @@ module.exports = (db) => {
 
     db.fileup.getRegister(name, email, image, hashedpassword, (err, results)=>{
 
+        tempUser = request.body.name;
+
         if(results){
             response.redirect('/login');
         } else{
@@ -46,8 +53,11 @@ module.exports = (db) => {
 
 //============================================================
   let loginCC = (request, response) => {
-
-    response.render('fileup/login');
+    let data={
+        username: tempUser
+    }
+    setTimeout(function(){tempUser = null}, 200);
+    response.render('fileup/login', data);
 
   };
 //============================================================
@@ -126,6 +136,85 @@ module.exports = (db) => {
 
 
 
+
+let changePasswordAlert;
+
+
+//============================================================
+  let profileEditCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            db.fileup.getUserID(user_id, (error, results) => {
+                let data = {
+                    results: results,
+                    alert: changePasswordAlert
+                }
+                setTimeout(function(){changePasswordAlert = null}, 200);
+                response.render('fileup/profileEdit', data)
+          });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+//============================================================
+  let profileEditingCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let name = request.body.name;
+            let company_name;
+            if (request.body.company_name === undefined){
+                company_name = null;
+            } else {
+                company_name = request.body.company_name;
+            }
+
+            db.fileup.getProfileEdited(user_id, name, company_name, (error, results) => {
+                response.redirect('/');
+          });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+//============================================================
+  let changePasswordCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let hashedpassword = sha256(SALT + request.body.password);
+            changePasswordAlert = "Your password have been updated"
+
+            db.fileup.getPasswordChanged(user_id, hashedpassword, (error, results) => {
+                response.redirect('/profileEdit');
+          });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
 //============================================================
   let caseCreateCC = (request, response) => {
 
@@ -154,6 +243,7 @@ module.exports = (db) => {
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
+            console.log(request.body)
 
             db.fileup.getCaseDeleted(case_id, (err, results)=>{
                 response.redirect('/');
@@ -494,6 +584,9 @@ module.exports = (db) => {
     logout: logoutCC,
     loginUser: loginUserCC,
     home: homeCC,
+    profileEdit: profileEditCC,
+    profileEditing: profileEditingCC,
+    changePassword: changePasswordCC,
     caseCreate: caseCreateCC,
     deleteCase: deleteCaseCC,
     addInCase: addInCaseCC,

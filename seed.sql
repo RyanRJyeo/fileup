@@ -46,3 +46,11 @@ WHERE id = 3 AND users_id = 1
 
 -- Update group name is already inserted before
 UPDATE groups SET group_name = asdasd WHERE case_id = asdasd;
+
+
+Bon Jovi pw:
+920a15b156bbb2e38625bffddcd54f7a0db22084764e11b57dbf39018ee25552
+
+4424dead37e3abfb0cdafea81bf36107ec5b2dabf49e537364f8c35dfd488b00
+
+920a15b156bbb2e38625bffddcd54f7a0db22084764e11b57dbf39018ee25552

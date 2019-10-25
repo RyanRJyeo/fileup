@@ -62,7 +62,7 @@ class Case extends React.Component {
                 let upDate = `${updating.getFullYear()}/${updating.getMonth() + 1}/${updating.getDate()}`;
                 let upTime = `${updating.getHours()}:` + `${updating.getMinutes()}:${updating.getSeconds()}`;
                 updated_at =    <div>
-                                    <span className="lead mr-4">Updated by {name}</span><span className="mr-2">{upDate}</span><span>{upTime}</span>
+                                    <span className="lead mr-4">Updated by {name}</span><br/><span className="mr-2">{upDate}</span><span>{upTime}</span>
                                 </div>
             } else {
                 updated_at = null;
@@ -72,7 +72,7 @@ class Case extends React.Component {
 
             return  <div className="jumbotron jumbotron-fluid">
                         <div className="container">
-                            <span className="lead mr-4">Commented by {name}</span><span className="mr-2">{date}</span><span>{time}</span>
+                            <p><span className="lead mr-4">Commented by {name}</span><br/><span className="mr-2">{date}</span><span>{time}</span></p>
                             {updated_at}
                             <hr className="my-4"/>
                             <p className="comments">{content}</p>

@@ -9,11 +9,18 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-around;
+	align-items: flex-start;
 
 }
 
 .profilePic{
-	width: 400px;
+	width: 250px;
+	height: 250px;
+}
+
+.editProfilePic{
+	width: 200px;
+	margin: 0 auto;
 }
 
 .details{

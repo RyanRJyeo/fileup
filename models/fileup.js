@@ -155,6 +155,66 @@ module.exports = (dbPoolInstance) => {
 
 
 
+
+  let getProfileEdited = (user_id, name, company_name, callback) => {
+
+    let inputValues = [user_id, name, company_name];
+
+    let query = 'UPDATE users SET name = ($2), company_name = ($3) WHERE id = ($1)';
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getPasswordChanged = (user_id, hashedpassword, callback) => {
+
+    let inputValues = [user_id, hashedpassword];
+
+    let query = 'UPDATE users SET password = ($2) WHERE id = ($1)';
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
   let getCaseAdded = (user_id, name, age, contact, callback) => {
 
     let inputValues = [user_id, name, age, contact];
@@ -543,6 +603,8 @@ module.exports = (dbPoolInstance) => {
     getHome,
     getGroups,
     getUserID,
+    getProfileEdited,
+    getPasswordChanged,
     getCaseAdded,
     getCase,
     getCaseDeleted,

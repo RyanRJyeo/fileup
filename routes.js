@@ -18,8 +18,11 @@ module.exports = (app, allModels) => {
   app.get('/register', controllerCallbacks.register);
   app.post('/register', controllerCallbacks.registerUser);
   app.get('/login', controllerCallbacks.login);
-  app.get('/logout', controllerCallbacks.logout)
   app.post('/login', controllerCallbacks.loginUser);
+  app.get('/logout', controllerCallbacks.logout)
+  app.get('/profileEdit', controllerCallbacks.profileEdit);
+  app.post('/profileEdit', controllerCallbacks.profileEditing);
+  app.post('/changePassword', controllerCallbacks.changePassword);
   app.get('/caseCreate', controllerCallbacks.caseCreate);
   app.post('/caseCreate', controllerCallbacks.addInCase);
   app.get('/case/:id', controllerCallbacks.case);

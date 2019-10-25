@@ -2,6 +2,22 @@ var React = require("react");
 
 class Register extends React.Component {
   render() {
+
+
+
+    let alertUser;
+
+    if (this.props.username){
+        alertUser =     <div class="alert alert-danger text-center" role="alert">
+                          Email already registered
+                        </div>
+    } else {
+        alertUser = null;
+    }
+
+
+
+
     return (
       <html>
         <head>
@@ -12,6 +28,7 @@ class Register extends React.Component {
         </head>
         <body>
 
+            {alertUser}
             <h1 className="display-4 text-center mt-5">Welcome to FileUp</h1>
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action='/register'>

@@ -21,7 +21,7 @@ class CommentEdit extends React.Component {
 
             <Navbar/>
 
-            <h1 className="text-center mt-5">Edit Comment: {this.props.results[0].user_name}</h1>
+            <h1 className="text-center mt-5">Edit Comment</h1>
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/commentEdit"}>
                   <div className="form-group">
