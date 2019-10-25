@@ -6,7 +6,7 @@ const sha256 = require('js-sha256');
 module.exports = (db) => {
 
     let SALT = process.env.SALT
-    // let SALT = "23891289814893748274723470234809"
+
     let tempUser;
 
   /**
