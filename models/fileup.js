@@ -508,7 +508,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [comment_id];
 
-    let query = "SELECT * FROM comments WHERE id = ($1)";
+    let query = "SELECT comments.id, case_id, user_name, content, created_at, name FROM comments INNER JOIN cases ON (comments.case_id = cases.id) WHERE case_id = ($1)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -596,6 +596,38 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getOneCase = (user_id, case_name, callback) => {
+
+    let inputValues = [user_id, case_name + "%"];
+
+    let query = "SELECT * FROM cases WHERE name LIKE ($2) AND users_id = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+
 
   return {
     getRegister,
@@ -616,5 +648,6 @@ module.exports = (dbPoolInstance) => {
     getCommentEditPage,
     getCommentEdited,
     getCommentDeleted,
+    getOneCase,
   };
 };

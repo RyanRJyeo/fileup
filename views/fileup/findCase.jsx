@@ -1,9 +1,35 @@
 var React = require("react");
 
-class PreferenceEdit extends React.Component {
+class FindCase extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
+
+    let cases;
+
+    if (this.props.results){
+        cases = this.props.results.map(x=>{
+            let id = x.id;
+            let name = x.name;
+            let age = x.age;
+            let contact = x.contact
+
+            return  <div class="card mr-3 mt-5">
+                      <div class="card-body">
+                        <h5 class="card-title">{name}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Age: {age}</h6>
+                        <p class="card-text">Contact: {contact}</p>
+                        <a href={"/case/" + id} class="card-link">Get this file</a>
+                      </div>
+                    </div>
+
+
+        });
+    } else {
+        cases = <p className="lead text-center mt-5">No such file under your database</p>
+    }
+
+
 
     return (
       <html>
@@ -17,24 +43,10 @@ class PreferenceEdit extends React.Component {
 
             <Navbar/>
 
-            <h3 className="text-center mt-5">Edit Preference: {this.props.results[0].name}</h3>
-            <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/preference"}>
-                    <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true"  required/>
-                    </div>
-                    <div className="form-group">
-                        <p>Likes:</p>
-                        <textarea type="text" rows="6" className="form-control rounded" name="likes" placeholder="likes" required></textarea>
-                    </div>
-                    <div className="form-group">
-                        <p>Dislikes:</p>
-                        <textarea type="text" rows="6" className="form-control rounded" name="dislikes" placeholder="dislikes" required></textarea>
-                    </div>
-                    <button type="submit" className="btn btn-primary">Save</button>
-                </form>
-            </div>
-
+            <h3 className="text-center mt-5">Search Results:</h3>
+                <div className=" row justify-content-center">
+                    {cases}
+                </div>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -45,4 +57,4 @@ class PreferenceEdit extends React.Component {
   }
 }
 
-module.exports = PreferenceEdit;
+module.exports = FindCase;

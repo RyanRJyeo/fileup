@@ -30,7 +30,7 @@ class ProfileEdit extends React.Component {
 
             {alertUser}
 
-            <h1 className="display-4 text-center mt-5">Edit Your Profile</h1>
+            <h1 className="text-center mt-5">Edit Your Profile</h1>
             <a className="row justify-content-center">
                 <img type="button" data-toggle="modal" data-target="#profilePic" className="img-thumbnail editProfilePic" src={this.props.results[0].image}/>
             </a>

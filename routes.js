@@ -36,6 +36,7 @@ module.exports = (app, allModels) => {
   app.get('/case/:id/commentEdit', controllerCallbacks.commentEdit);
   app.post('/case/:id/commentEdit', controllerCallbacks.commentEditing);
   app.post('/case/commentDelete', controllerCallbacks.commentDelete);
+  app.post('/findCase', controllerCallbacks.findCase);
   app.get('/', controllerCallbacks.home);
 
 };

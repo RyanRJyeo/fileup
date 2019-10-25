@@ -41,3 +41,8 @@
 	white-space: pre-wrap;
 	word-wrap: break-word;
 }
+
+.card{
+	width: 150px;
+	display: inline-block;
+}

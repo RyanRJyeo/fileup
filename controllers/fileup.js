@@ -5,8 +5,8 @@ const sha256 = require('js-sha256');
 
 module.exports = (db) => {
 
-    let SALT = process.env.SALT
-
+    // let SALT = process.env.SALT
+    let SALT = "23891289814893748274723470234809"
     let tempUser;
 
   /**
@@ -91,11 +91,9 @@ module.exports = (db) => {
 
             if (hashedpassword === results[0].password){
                 let user_id = results[0].id;
-                let username = results[0].username;
                 let hashedcookie = sha256(SALT + user_id);
 
                 response.cookie('user_id', user_id);
-                response.cookie('username', username);
                 response.cookie('hasLoggedIn', hashedcookie);
 
                 response.redirect('/');
@@ -243,7 +241,6 @@ let changePasswordAlert;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
-            console.log(request.body)
 
             db.fileup.getCaseDeleted(case_id, (err, results)=>{
                 response.redirect('/');
@@ -305,7 +302,6 @@ let changePasswordAlert;
                                 results: results,
                                 res: res
                             }
-                            console.log(data);
                         response.render('fileup/case', data);
                     });
                 } else {
@@ -354,7 +350,7 @@ let changePasswordAlert;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getCase(requestCaseID, (error, results) => {
+        db.fileup.getCase(request.body.id, (error, results) => {
             let verifyUser = parseInt(results[0].id);
             let verifyUser2 = parseInt(user_id);
             if (verifyUser === verifyUser2){
@@ -500,9 +496,9 @@ let changePasswordAlert;
             let verifyUser = parseInt(results[0].id);
             let verifyUser2 = parseInt(user_id);
             if (verifyUser === verifyUser2){
-                let comment_id = request.params.id;
+                let case_id = requestCaseID;
 
-                db.fileup.getCommentEditPage(comment_id, (error, results) => {
+                db.fileup.getCommentEditPage(case_id, (error, results) => {
                     response.render('fileup/commentEdit', {results});
                 });
             } else {
@@ -570,6 +566,29 @@ let changePasswordAlert;
 
 
 
+//============================================================
+  let findCaseCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let case_name = request.body.name;
+
+            db.fileup.getOneCase(user_id, case_name, (error, results) => {
+                console.log(results);
+                response.render('fileup/findCase', {results});
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
 
 
   /**
@@ -600,6 +619,7 @@ let changePasswordAlert;
     commentEdit: commentEditCC,
     commentEditing: commentEditingCC,
     commentDelete: commentDeleteCC,
+    findCase: findCaseCC,
   };
 
 }

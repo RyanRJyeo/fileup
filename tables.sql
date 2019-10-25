@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS user_cases(
 	id SERIAL PRIMARY KEY,
 	users_id INTEGER,
-	case_id INTEGER
+	case_id INTEGER,
 );
 
 
@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS cases(
 	users_id INTEGER,
 	name VARCHAR(20),
 	age INTEGER,
-	contact VARCHAR(20)
+	contact VARCHAR(20),
+	group_id INTEGER
 );
 
 
@@ -46,7 +47,6 @@ CREATE TABLE IF NOT EXISTS comments(
 
 CREATE TABLE IF NOT EXISTS groups(
 	id SERIAL PRIMARY KEY,
-	case_id INTEGER UNIQUE,
 	group_name VARCHAR(20)
 );
 
