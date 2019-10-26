@@ -23,13 +23,13 @@ module.exports = (app, allModels) => {
   app.get('/profileEdit', controllerCallbacks.profileEdit);
   app.post('/profileEdit', controllerCallbacks.profileEditing);
   app.post('/changePassword', controllerCallbacks.changePassword);
+  app.post('/groupCreate', controllerCallbacks.groupCreate);
   app.get('/caseCreate', controllerCallbacks.caseCreate);
   app.post('/caseCreate', controllerCallbacks.addInCase);
   app.get('/case/:id', controllerCallbacks.case);
   app.post('/case/:id/delete', controllerCallbacks.deleteCase);
   app.get('/case/:id/edit', controllerCallbacks.caseEdit);
   app.post('/case/:id/edit', controllerCallbacks.caseEditing);
-  app.post('/case', controllerCallbacks.addGroup);
   app.post('/case/:id/comments', controllerCallbacks.comments);
   app.get('/case/:id/preference', controllerCallbacks.preference);
   app.post('/case/:id/preference', controllerCallbacks.preferenceEdit);

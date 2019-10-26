@@ -5,6 +5,20 @@ class CaseCreate extends React.Component {
 
     let Navbar = require('./navbar.jsx');
 
+    let groups;
+
+    if (this.props.groups){
+        groups = this.props.groups.map(x=>{
+            let id = x.id;
+            let name = x.group_name;
+
+            return <option value={id}>{name}</option>
+
+        });
+    } else {
+        groups = <option>No folders yet</option>
+    }
+
     return (
       <html>
         <head>
@@ -21,7 +35,13 @@ class CaseCreate extends React.Component {
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action='/caseCreate'>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded d-none" readonly="true" name="users_id" value={this.props.results[0].id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="users_id" value={this.props.id} required/>
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1" name="group_id">
+                        {groups}
+                        <option>Folder not needed for this file</option>
+                    </select>
                   </div>
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>

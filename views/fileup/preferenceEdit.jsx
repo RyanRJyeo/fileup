@@ -24,14 +24,20 @@ class PreferenceEdit extends React.Component {
                         <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true"  required/>
                     </div>
                     <div className="form-group">
-                        <p>Likes:</p>
+                        <p><u>Likes:</u></p>
+                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous likes" placeholder={this.props.results[0].likes} required></textarea>
+                    </div>
+                    <div className="form-group">
                         <textarea type="text" rows="6" className="form-control rounded" name="likes" placeholder="likes" required></textarea>
                     </div>
                     <div className="form-group">
-                        <p>Dislikes:</p>
+                        <p><u>Disikes:</u></p>
+                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous dislikes" placeholder={this.props.results[0].dislikes} required></textarea>
+                    </div>
+                    <div className="form-group">
                         <textarea type="text" rows="6" className="form-control rounded" name="dislikes" placeholder="dislikes" required></textarea>
                     </div>
-                    <button type="submit" className="btn btn-primary">Save</button>
+                    <button type="submit" className="btn btn-primary mb-5">Save</button>
                 </form>
             </div>
 

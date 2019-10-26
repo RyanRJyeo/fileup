@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS user_cases(
 	id SERIAL PRIMARY KEY,
 	users_id INTEGER,
-	case_id INTEGER,
+	case_id INTEGER
 );
 
 
@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS user_cases(
 CREATE TABLE IF NOT EXISTS cases(
 	id SERIAL PRIMARY KEY,
 	users_id INTEGER,
+	group_id INTEGER,
 	name VARCHAR(20),
 	age INTEGER,
-	contact VARCHAR(20),
-	group_id INTEGER
+	contact VARCHAR(20)
 );
 
 
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS preferences(
 CREATE TABLE IF NOT EXISTS comments(
 	id SERIAL PRIMARY KEY,
 	case_id INTEGER,
+	users_id INTEGER,
 	user_name TEXT,
 	content TEXT,
 	created_at TIMESTAMPTZ DEFAULT now(),
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS comments(
 
 CREATE TABLE IF NOT EXISTS groups(
 	id SERIAL PRIMARY KEY,
+	users_id INTEGER,
 	group_name VARCHAR(20)
 );
 
