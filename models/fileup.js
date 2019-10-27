@@ -99,7 +99,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [user_id];
 
-    let query = "SELECT * FROM groups WHERE users_id = ($1)";
+    let query = "SELECT * FROM groups WHERE users_id = ($1) ORDER BY id";
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -157,11 +157,102 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getGroupPage = (group_id, callback) => {
+
+    let inputValues = [group_id];
+
+    let query = "SELECT groups.id AS group_id, groups.users_id, group_name, cases.id AS cases_id, name, age, contact FROM groups LEFT JOIN cases ON (groups.id = group_id) WHERE groups.id = ($1)";
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+  let getGroupEdited = (group_id, group_name, callback) => {
+
+    let inputValues = [group_id, group_name];
+
+    let query = "UPDATE groups SET group_name = ($2) WHERE id = ($1)";
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+  let getGroupDeleted = (group_id, callback) => {
+
+    let inputValues = [group_id];
+
+    let query = "WITH deleted_group AS (DELETE FROM groups WHERE id = ($1) RETURNING *) UPDATE cases SET group_id = null WHERE group_id = ($1)";
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+
   let getCases = (user_id, callback) => {
 
     let inputValues = [user_id];
 
-    let query = "SELECT * FROM cases WHERE users_id = ($1)";
+    let query = "SELECT * FROM cases WHERE users_id = ($1) ORDER BY id";
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -243,8 +334,6 @@ module.exports = (dbPoolInstance) => {
   };
 
 
-
-
   let getCaseAdded = (user_id, group, name, age, contact, callback) => {
 
     let inputValues = [user_id, group, name, age, contact];
@@ -274,12 +363,11 @@ module.exports = (dbPoolInstance) => {
 
 
 
-
-  let getCase = (requestCaseID, callback) => {
+  let getOneCase = (requestCaseID, callback) => {
 
     let inputValues = [requestCaseID];
 
-    let query = "SELECT cases.id AS case_id, cases.name, age, contact, groups.id AS group_id, group_name, users.name AS user_name, users.id, likes, dislikes FROM cases LEFT JOIN groups ON (cases.id = groups.case_id) LEFT JOIN users ON (users.id = cases.users_id) LEFT JOIN preferences ON (cases.id = preferences.case_id) WHERE cases.id = ($1)"
+    let query = 'SELECT * FROM cases WHERE id = ($1)';
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -304,7 +392,61 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getOneGroup = (group_id, callback) => {
 
+    let inputValues = [group_id];
+
+    let query = 'SELECT * FROM groups WHERE id = ($1)';
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getPreference = (case_id, callback) => {
+
+    let inputValues = [case_id];
+
+    let query = 'SELECT * FROM preferences WHERE case_id = ($1)';
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
 
 
   let getCaseDeleted = (case_id, callback) => {
@@ -338,11 +480,11 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  let getCaseEdited = (requestCaseID, requestUserID, requestName, requestAge, requestContact, callback) => {
+  let getCaseEdited = (requestCaseID, requestUserID, group, requestName, requestAge, requestContact, callback) => {
 
-    let inputValues = [requestCaseID, requestUserID, requestName, requestAge, requestContact];
+    let inputValues = [requestCaseID, requestUserID, group, requestName, requestAge, requestContact];
 
-    let query = "UPDATE cases SET name = ($3), age = ($4), contact = ($5) WHERE id = ($1) AND users_id = ($2)";
+    let query = "UPDATE cases SET group_id = ($3), name = ($4), age = ($5), contact = ($6) WHERE id = ($1) AND users_id = ($2)";
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -572,7 +714,7 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  let getOneCase = (user_id, case_name, callback) => {
+  let getSearchCase = (user_id, case_name, callback) => {
 
     let inputValues = [user_id, case_name + "%"];
 
@@ -603,6 +745,35 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getSearchUsers = (name, callback) => {
+
+    let inputValues = [name + "%"];
+
+    let query = "SELECT * FROM users WHERE name LIKE ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
 
 
   return {
@@ -611,11 +782,16 @@ module.exports = (dbPoolInstance) => {
     getUser,
     getGroups,
     getGroupAdded,
+    getGroupPage,
+    getGroupEdited,
+    getGroupDeleted,
     getCases,
     getProfileEdited,
     getPasswordChanged,
     getCaseAdded,
-    getCase,
+    getOneCase,
+    getOneGroup,
+    getPreference,
     getCaseDeleted,
     getCaseEdited,
     getPreferenceEdited,
@@ -624,6 +800,7 @@ module.exports = (dbPoolInstance) => {
     getCommentEditPage,
     getCommentEdited,
     getCommentDeleted,
-    getOneCase,
+    getSearchCase,
+    getSearchUsers,
   };
 };

@@ -5,49 +5,37 @@ class Case extends React.Component {
 
     let Navbar = require('./navbar.jsx');
 
-    let groupButton;
-
-    if (this.props.results[0].group_name){
-        groupButton =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                      Edit Group
-                    </button>
-    } else {
-        groupButton =    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                      Add Group
-                    </button>
-    }
-
-
     let preferenceContent;
     let preferenceButton;
 
-    if (this.props.results[0].likes){
+    if (this.props.preference){
         preferenceContent = <tbody>
                                 <tr>
                                     <th scope="col-6">Likes</th>
-                                    <td className="preferenceContent">{this.props.results[0].likes}</td>
+                                    <td className="preferenceContent">{this.props.preference[0].likes}</td>
                                 </tr>
                                 <tr>
                                     <th scope="col-6">Disikes</th>
-                                    <td className="preferenceContent">{this.props.results[0].dislikes}</td>
+                                    <td className="preferenceContent">{this.props.preference[0].dislikes}</td>
                                 </tr>
                             </tbody>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.results[0].case_id + "/preference"}>Edit Preferences</a>
+                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.cases[0].id + "/preference"}>Edit Preferences</a>
                             </div>
     } else {
         preferenceContent = <p className="text-center mt-5">Preferences have not been set yet</p>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.results[0].case_id + "/preference"}>Add Preferences</a>
+                                <a class="btn btn-outline-primary btn-sm mt-3" href={"/case/" + this.props.cases[0].id + "/preference"}>Add Preferences</a>
                             </div>
     }
 
 
     let comments;
-    if (this.props.res){
-        comments = this.props.res.map(x=>{
+
+    if (this.props.comments){
+        comments = this.props.comments.map(x=>{
             let comment_id = parseInt(x.id);
             let case_id = x.case_id;
             let name = x.user_name;
@@ -114,6 +102,14 @@ class Case extends React.Component {
     }
 
 
+    let group_name;
+
+    if (this.props.group){
+        group_name = <p>{this.props.group[0].group_name}</p>
+    } else {
+        group_name = <p>Not assigned to a folder yet</p>
+    }
+
 
     return (
       <html>
@@ -130,7 +126,7 @@ class Case extends React.Component {
 
             <main className="container">
                 <div className="editProfile container text-right">
-                    <a className="btn btn-primary mt-3 mr-4" href={"/case/" + this.props.results[0].case_id + "/edit"}><i class='bx bx-edit-alt' ></i></a>
+                    <a className="btn btn-primary mt-3 mr-4" href={"/case/" + this.props.cases[0].id + "/edit"}><i class='bx bx-edit-alt' ></i></a>
                     <button class="btn btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class='bx bxs-eraser' ></i>
                     </button>
@@ -141,8 +137,9 @@ class Case extends React.Component {
                         <div class="card card-body mt-2 col-8 text-center">
                             <p>Are you sure you want to delete this file?</p>
                             <p>It will be permanently removed from the database</p>
-                            <form method='POST' action={"/case/" + this.props.results[0].case_id + "/delete"}>
-                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true" required/>
+                            <form method='POST' action={"/case/" + this.props.cases[0].id + "/delete"}>
+                                <input type="text" className="form-control rounded d-none" name="case_name"value={this.props.cases[0].name} readonly="true" required/>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].id} readonly="true" required/>
                                 <button type="submit" className="btn btn-outline-danger btn-sm">Yes Delete Permanently</button>
                             </form>
                         </div>
@@ -156,44 +153,20 @@ class Case extends React.Component {
 
 
 
-                <h1 className="row justify-content-center">{this.props.results[0].name}</h1>
+                <h1 className="row justify-content-center">{this.props.cases[0].name}</h1>
 
                 <div className="row text-center mt-5">
                     <div className="basicInfoContent col">
                         <p><u>Age:</u></p>
-                        <p className="lead" >{this.props.results[0].age}</p>
+                        <p className="lead" >{this.props.cases[0].age}</p>
                     </div>
                     <div className="col">
                         <p><u>Contact:</u></p>
-                        <p className="lead" >{this.props.results[0].contact}</p>
+                        <p className="lead" >{this.props.cases[0].contact}</p>
                     </div>
                     <div className="col">
-                        <p><u>Group:</u></p>
-                        <p className="lead">{this.props.results[0].group_name}</p>
-                        {groupButton}
-                    </div>
-                </div>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Edit Group</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            </div>
-                            <div class="modal-body">
-                                <form className="col align-self-center" method='POST' action='/case'>
-                                    <div className="form-group">
-                                        <input type="number" className="form-control rounded d-none" name="case_id" value={this.props.results[0].case_id} readonly="true" required/>
-                                    </div>
-                                    <div className="form-group">
-                                        <input type="text" className="form-control rounded" name="group" placeholder="Group Name" maxlength="20" required/>
-                                    </div>
-                                        <button type="btn" class="btn btn-secondary mr-4" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                </form>
-                            </div>
-                        </div>
+                        <p><u>Folder:</u></p>
+                        <p className="lead">{group_name}</p>
                     </div>
                 </div>
 
@@ -207,13 +180,13 @@ class Case extends React.Component {
 
                     {comments}
 
-                    <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/comments"}>
+                    <form className="col align-self-center" method='POST' action={"/case/" + this.props.cases[0].id + "/comments"}>
                         <div className="form-group">
                             <div className="form-group">
-                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true" required/>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].id} readonly="true" required/>
                             </div>
                             <div className="form-group">
-                                <input type="text" className="form-control rounded d-none" name="name"value={this.props.results[0].user_name} readonly="true" required/>
+                                <input type="text" className="form-control rounded d-none" name="name"value={this.props.user_name} readonly="true" required/>
                             </div>
                             <textarea type="text" rows="10" className="form-control rounded" name="content" placeholder="Comment Here" required></textarea>
                         </div>

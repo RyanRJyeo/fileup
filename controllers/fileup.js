@@ -8,6 +8,7 @@ module.exports = (db) => {
     // let SALT = process.env.SALT
     let SALT = "23891289814893748274723470234809"
     let tempUser;
+    let alertUser;
 
   /**
    * ===========================================
@@ -94,6 +95,7 @@ module.exports = (db) => {
                 let hashedcookie = sha256(SALT + user_id);
 
                 response.cookie('user_id', user_id);
+                response.cookie('user_name', results[0].name);
                 response.cookie('hasLoggedIn', hashedcookie);
 
                 response.redirect('/');
@@ -124,9 +126,11 @@ module.exports = (db) => {
                         let data = {
                             user: user,
                             groups: groups,
-                            cases: cases
+                            cases: cases,
+                            alertUser: alertUser
                         }
 
+                        setTimeout(function(){alertUser = null}, 200);
                         response.render('fileup/index', data);
                     })
                 });
@@ -242,6 +246,78 @@ let changePasswordAlert;
 
 
 //============================================================
+  let groupPageCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let group_id = request.params.id;
+            db.fileup.getGroupPage(group_id, (err, results)=>{
+                let verifyUser = parseInt(results[0].users_id);
+                let verifyUser2 = parseInt(user_id);
+                if (verifyUser === verifyUser2){
+                    response.render('fileup/groupPage', {results});
+                } else {
+                    response.redirect('/');
+                };
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+//============================================================
+  let groupEditCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let group_id = request.body.group_id;
+            let group_name = request.body.group_name;
+
+            db.fileup.getGroupEdited(group_id, group_name, (err, results)=>{
+                response.redirect('/group/' + group_id);
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+//============================================================
+  let groupDeleteCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let group_id = request.body.group_id;
+            alertUser = "Folder " + request.body.group_name + " has been deleted"
+
+            console.log(request.body);
+            db.fileup.getGroupDeleted(group_id, (err, results)=>{
+                response.redirect('/');
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+//============================================================
   let caseCreateCC = (request, response) => {
 
     let user_id = request.cookies['user_id'];
@@ -275,6 +351,7 @@ let changePasswordAlert;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
+            alertUser = "File " + request.body.case_name + " has been deleted"
 
             db.fileup.getCaseDeleted(case_id, (err, results)=>{
                 response.redirect('/');
@@ -295,7 +372,6 @@ let changePasswordAlert;
     let hashedValue = sha256( SALT + user_id );
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            console.log(request.body)
             let group;
             if(isNaN(request.body.group_id)){
                 group = null;
@@ -328,21 +404,29 @@ let changePasswordAlert;
   let caseCC = (request, response) => {
 
     let user_id = request.cookies['user_id'];
+    let user_name = request.cookies['user_name'];
     let hashedValue = sha256( SALT + user_id );
     let requestCaseID = request.params.id;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            db.fileup.getCase(requestCaseID, (error, results) => {
-                let verifyUser = parseInt(results[0].id);
+            db.fileup.getOneCase(requestCaseID, (error, cases) => {
+                let verifyUser = parseInt(cases[0].users_id);
                 let verifyUser2 = parseInt(user_id);
-
                 if (verifyUser === verifyUser2){
-                    db.fileup.getComments(requestCaseID, (err, res)=>{
-                            let data= {
-                                results: results,
-                                res: res
-                            }
-                        response.render('fileup/case', data);
+                    db.fileup.getOneGroup(cases[0].group_id, (error, group)=>{
+                        db.fileup.getPreference(cases[0].id, (error, preference)=>{
+                            db.fileup.getComments(cases[0].id, (err, comments)=>{
+                                let data= {
+                                    user_name: user_name,
+                                    cases: cases,
+                                    group: group,
+                                    preference: preference,
+                                    comments: comments
+                                };
+
+                                response.render('fileup/case', data);
+                            });
+                        });
                     });
                 } else {
                     response.redirect('/');
@@ -365,11 +449,18 @@ let changePasswordAlert;
     let requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            db.fileup.getCase(requestCaseID, (error, results) => {
-                let verifyUser = parseInt(results[0].id);
+            db.fileup.getOneCase(requestCaseID, (error, results) => {
+                let verifyUser = parseInt(results[0].users_id);
                 let verifyUser2 = parseInt(user_id);
                 if (verifyUser === verifyUser2){
-                    response.render('fileup/caseEdit', {results});
+                    db.fileup.getGroups(user_id, (error, group)=>{
+                        let data = {
+                            group: group,
+                            results: results
+                        };
+
+                        response.render('fileup/caseEdit', data);
+                    });
                 } else {
                     response.redirect('/');
                 };
@@ -390,21 +481,22 @@ let changePasswordAlert;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getCase(request.body.id, (error, results) => {
-            let verifyUser = parseInt(results[0].id);
-            let verifyUser2 = parseInt(user_id);
-            if (verifyUser === verifyUser2){
-                let requestCaseID = request.body.id;
-                let requestUserID = request.body.users_id;
-                let requestName = request.body.name;
-                let requestAge = request.body.age;
-                let requestContact = request.body.contact;
-                db.fileup.getCaseEdited(requestCaseID, requestUserID, requestName, requestAge, requestContact, (error, results) => {
-                    response.redirect('/case/'+requestCaseID);
-                });
+        db.fileup.getOneCase(request.body.id, (error, results) => {
+            let requestCaseID = request.body.id;
+            let requestUserID = request.body.users_id;
+            let group;
+            if(isNaN(request.body.group_id)){
+                group = null;
             } else {
-                response.redirect('/');
+                group = request.body.group_id
             };
+            let requestName = request.body.name;
+            let requestAge = request.body.age;
+            let requestContact = request.body.contact;
+
+            db.fileup.getCaseEdited(requestCaseID, requestUserID, group, requestName, requestAge, requestContact, (error, results) => {
+                response.redirect('/case/'+requestCaseID);
+            });
         });
     } else {
         response.redirect('/login');
@@ -422,11 +514,18 @@ let changePasswordAlert;
     let requestCaseID = request.params.id;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            db.fileup.getCase(requestCaseID, (error, results) => {
-                let verifyUser = parseInt(results[0].id);
+            db.fileup.getOneCase(requestCaseID, (error, results) => {
+                let verifyUser = parseInt(results[0].users_id);
                 let verifyUser2 = parseInt(user_id);
                 if (verifyUser === verifyUser2){
-                    response.render('fileup/preferenceEdit', {results});
+                    db.fileup.getPreference(requestCaseID, (err, preferences)=>{
+                        let data = {
+                            preferences: preferences,
+                            results: results
+                        };
+
+                        response.render('fileup/preferenceEdit', data);
+                    });
                 } else {
                     response.redirect('/');
                 };
@@ -449,20 +548,12 @@ let changePasswordAlert;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getCase(requestCaseID, (error, results) => {
-            let verifyUser = parseInt(results[0].id);
-            let verifyUser2 = parseInt(user_id);
-            if (verifyUser === verifyUser2){
-                let case_id = request.body.case_id;
-                let likes = request.body.likes;
-                let dislikes = request.body.dislikes;
+        let case_id = request.body.case_id;
+        let likes = request.body.likes;
+        let dislikes = request.body.dislikes;
 
-                db.fileup.getPreferenceEdited(case_id, likes, dislikes, (error, results) => {
-                    response.redirect('/case/'+case_id);
-                });
-            } else {
-                response.redirect('/');
-            };
+        db.fileup.getPreferenceEdited(case_id, likes, dislikes, (error, results) => {
+            response.redirect('/case/'+case_id);
         });
     } else {
         response.redirect('/login');
@@ -508,13 +599,14 @@ let changePasswordAlert;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getCase(requestCaseID, (error, results) => {
-            let verifyUser = parseInt(results[0].id);
+        db.fileup.getOneCase(requestCaseID, (error, results) => {
+            let verifyUser = parseInt(results[0].users_id);
             let verifyUser2 = parseInt(user_id);
             if (verifyUser === verifyUser2){
                 let case_id = requestCaseID;
 
                 db.fileup.getCommentEditPage(case_id, (error, results) => {
+
                     response.render('fileup/commentEdit', {results});
                 });
             } else {
@@ -592,7 +684,7 @@ let changePasswordAlert;
 
             let case_name = request.body.name;
 
-            db.fileup.getOneCase(user_id, case_name, (error, results) => {
+            db.fileup.getSearchCase(user_id, case_name, (error, results) => {
 
                 response.render('fileup/findCase', {results});
             });
@@ -602,6 +694,29 @@ let changePasswordAlert;
   };
 //============================================================
 
+
+
+
+
+//============================================================
+  let findUsersCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+
+            let name = request.body.username;
+
+            db.fileup.getSearchUsers(name, (error, results) => {
+
+                response.render('fileup/findUsers', {results});
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
 
 
 
@@ -623,6 +738,9 @@ let changePasswordAlert;
     profileEditing: profileEditingCC,
     changePassword: changePasswordCC,
     groupCreate: groupCreateCC,
+    groupPage: groupPageCC,
+    groupEdit: groupEditCC,
+    groupDelete: groupDeleteCC,
     caseCreate: caseCreateCC,
     deleteCase: deleteCaseCC,
     addInCase: addInCaseCC,
@@ -636,6 +754,7 @@ let changePasswordAlert;
     commentEditing: commentEditingCC,
     commentDelete: commentDeleteCC,
     findCase: findCaseCC,
+    findUsers: findUsersCC,
   };
 
 }

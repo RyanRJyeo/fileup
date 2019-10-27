@@ -22,11 +22,11 @@ class Navbar extends React.Component {
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="form-inline my-2 my-lg-0 mr-4" method='POST' action='/findCase'>
                       <input class="form-control mr-sm-2" type="text" name="name" placeholder="Find Your Files" required/>
-                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
                     </form>
-                    <form class="form-inline my-2 my-lg-0 mr-4" method='POST' action='/users'>
+                    <form class="form-inline my-2 my-lg-0 mr-4" method='POST' action='/findUsers'>
                       <input class="form-control mr-sm-2" type="text" name="username" placeholder="Find Other Users" required/>
-                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search Users</button>
+                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
                     </form>
                     <div class="navbar-nav">
                       <a class="btn btn-outline-dark" href="/logout">Log Out</a>

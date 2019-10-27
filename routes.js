@@ -24,6 +24,9 @@ module.exports = (app, allModels) => {
   app.post('/profileEdit', controllerCallbacks.profileEditing);
   app.post('/changePassword', controllerCallbacks.changePassword);
   app.post('/groupCreate', controllerCallbacks.groupCreate);
+  app.get('/group/:id', controllerCallbacks.groupPage);
+  app.post('/groupEdit', controllerCallbacks.groupEdit);
+  app.post('/groupDelete', controllerCallbacks.groupDelete);
   app.get('/caseCreate', controllerCallbacks.caseCreate);
   app.post('/caseCreate', controllerCallbacks.addInCase);
   app.get('/case/:id', controllerCallbacks.case);
@@ -37,6 +40,7 @@ module.exports = (app, allModels) => {
   app.post('/case/:id/commentEdit', controllerCallbacks.commentEditing);
   app.post('/case/commentDelete', controllerCallbacks.commentDelete);
   app.post('/findCase', controllerCallbacks.findCase);
+  app.post('/findUsers', controllerCallbacks.findUsers);
   app.get('/', controllerCallbacks.home);
 
 };

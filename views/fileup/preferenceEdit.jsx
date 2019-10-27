@@ -5,6 +5,31 @@ class PreferenceEdit extends React.Component {
 
     let Navbar = require('./navbar.jsx');
 
+    let word;
+
+    if(this.props.preferences){
+        word = <h3 className="text-center mt-5">Edit Preference: {this.props.results[0].name}</h3>
+    } else {
+        word = <h3 className="text-center mt-5">Add Preference: {this.props.results[0].name}</h3>
+    }
+
+
+    let likes;
+    let dislikes;
+
+    if (this.props.preferences){
+        likes = this.props.preferences.map(x=>{
+            return x.likes
+        });
+        dislikes = this.props.preferences.map(x=>{
+            return x.dislikes
+        });
+    } else {
+        likes = "Likes have not been added yet"
+        dislikes = "Dislikes have not been added yet"
+    }
+
+
     return (
       <html>
         <head>
@@ -17,22 +42,22 @@ class PreferenceEdit extends React.Component {
 
             <Navbar/>
 
-            <h3 className="text-center mt-5">Edit Preference: {this.props.results[0].name}</h3>
+            {word}
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/preference"}>
+                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].id + "/preference"}>
                     <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true"  required/>
+                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].id} readonly="true"  required/>
                     </div>
                     <div className="form-group">
                         <p><u>Likes:</u></p>
-                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous likes" placeholder={this.props.results[0].likes} required></textarea>
+                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous likes" value={likes} required></textarea>
                     </div>
                     <div className="form-group">
                         <textarea type="text" rows="6" className="form-control rounded" name="likes" placeholder="likes" required></textarea>
                     </div>
                     <div className="form-group">
                         <p><u>Disikes:</u></p>
-                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous dislikes" placeholder={this.props.results[0].dislikes} required></textarea>
+                        <textarea type="text" rows="6" className="form-control rounded" readonly="true" name="previous dislikes" value={dislikes} required></textarea>
                     </div>
                     <div className="form-group">
                         <textarea type="text" rows="6" className="form-control rounded" name="dislikes" placeholder="dislikes" required></textarea>

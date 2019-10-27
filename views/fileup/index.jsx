@@ -40,6 +40,16 @@ class Home extends React.Component {
     }
 
 
+    let alertUser;
+
+    if(this.props.alertUser){
+        alertUser =     <div class="alert alert-danger text-center" role="alert">
+                          {this.props.alertUser}
+                        </div>
+
+    } else {
+        alertUser = null;
+    }
 
 
     return (
@@ -54,6 +64,8 @@ class Home extends React.Component {
 
           <Navbar/>
 
+
+          {alertUser}
           <div className="editProfile">
                 <a className="btn btn-primary btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
           </div>

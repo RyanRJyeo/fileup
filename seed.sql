@@ -43,19 +43,8 @@ WHERE id = 3 AND users_id = 1
 
 
 
-
--- Update group name is already inserted before
-UPDATE groups SET group_name = asdasd WHERE case_id = asdasd;
-
-
-
-
-WITH insertGroup AS (INSERT INTO groups (group_name) values ($1) RETURNING *) UPDATE cases SET group_id = insertGroup.id WHERE case_id = ($2);
-
-
-
-
-SELECT comments.id, case_id, user_name, content, created_at, name
-FROM comments INNER JOIN cases
-ON (comments.case_id = cases.id)
-WHERE case_id = ($1)
+-- get group page
+SELECT groups.id AS group_id, groups.users_id, group_name, cases.id AS cases_id, name, age, contact
+FROM groups LEFT JOIN cases
+ON (groups.id = group_id)
+WHERE groups.id = 1;
