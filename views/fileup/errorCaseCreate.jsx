@@ -1,9 +1,23 @@
 var React = require("react");
 
-class CaseCreate extends React.Component {
+class ErrorCaseCreate extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
+
+    let groups;
+
+    if (this.props.groups){
+        groups = this.props.groups.map(x=>{
+            let id = x.id;
+            let name = x.group_name;
+
+            return <option value={id}>{name}</option>
+
+        });
+    } else {
+        groups = <option>No folders yet</option>
+    }
 
     return (
       <html>
@@ -24,18 +38,24 @@ class CaseCreate extends React.Component {
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action='/caseCreate'>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" readonly="true" name="users_id" value={this.props.user_id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="users_id" value={this.props.id} required/>
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" id="exampleFormControlSelect1" name="group_id">
+                        {groups}
+                        <option>Folder not needed for this file</option>
+                    </select>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="name" placeholder="Name" required/>
+                    <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>
                   </div>
                   <div className="form-group">
                     <input type="number" className="form-control rounded" name="age" placeholder="Age" required/>
                   </div>
                   <div className="form-group">
-                    <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" required/>
+                    <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" maxlength="20" required/>
                   </div>
-                  <button type="submit" className="btn btn-primary">Create This File</button>
+                  <button type="submit" className="btn btn-info">Create This File</button>
                 </form>
             </div>
 
@@ -49,4 +69,4 @@ class CaseCreate extends React.Component {
   }
 }
 
-module.exports = CaseCreate;
+module.exports = ErrorCaseCreate;

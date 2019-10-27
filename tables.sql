@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS groups(
 
 
 
-CREATE TABLE IF NOT EXISTS follows(
+CREATE TABLE IF NOT EXISTS invites(
 	id SERIAL PRIMARY KEY,
-	users_id INTEGER,
-	follow_id INTEGER
+	sender INTEGER,
+	receiver INTEGER
 );

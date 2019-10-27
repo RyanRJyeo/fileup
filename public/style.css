@@ -1,3 +1,29 @@
+body{
+	background-color: #F9F8F8 !important;
+	color: #3A3E3B !important;
+}
+
+.files{
+	color: #348497 !important;
+}
+
+
+.modal-content{
+	background:rgba(255, 255, 255, 0.8) !important;
+
+}
+
+.close{
+	display: none;
+}
+
+.login-form{
+	background:rgba(0, 0, 0, 0.4) !important;
+	border-radius: 10px;
+	padding: 30px;
+	margin: 5%;
+}
+
 .editProfile{
 	text-align: right;
 }
@@ -43,6 +69,6 @@
 }
 
 .card{
-	width: 150px;
+	width: 18rem;
 	display: inline-block;
 }

@@ -44,10 +44,10 @@ class GroupPage extends React.Component {
 
             <div className="container">
                 <div className="text-right">
-                    <button type="button" class="btn btn-primary mt-3 mr-4 " data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-sm btn-info mt-3 mr-4 " data-toggle="modal" data-target="#exampleModal">
                       <i class='bx bx-edit-alt' ></i>
                     </button>
-                    <button class="btn btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <button class="btn btn-sm btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class='bx bxs-eraser' ></i>
                     </button>
                 </div>
@@ -75,7 +75,7 @@ class GroupPage extends React.Component {
                             <input type="text" maxlength="20" className="form-control rounded" name="group_name" placeholder="Folder Name" required/>
                           </div>
                           <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                          <button type="submit" className="btn btn-primary"><i class='bx bx-save' ></i></button>
+                          <button type="submit" className="btn btn-info"><i class='bx bx-save' ></i></button>
                         </form>
 
 

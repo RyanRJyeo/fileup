@@ -24,11 +24,11 @@ class ErrorLogin extends React.Component {
                   <div className="form-group">
                     <input type="password" className="form-control rounded" id="password" name="password" placeholder="Password" required/>
                   </div>
-                  <button type="submit" className="btn btn-primary">Login</button>
+                  <button type="submit" className="btn btn-info">Login</button>
                 </form>
                 <br/>
                 <form className="col align-self-center" method='GET' action='/register'>
-                    <button type="submit" className="btn btn-primary">New to us? Register here</button>
+                    <button type="submit" className="btn btn-info">New to us? Register here</button>
                 </form>
             </div>
 

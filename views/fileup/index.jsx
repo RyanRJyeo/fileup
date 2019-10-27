@@ -13,7 +13,7 @@ class Home extends React.Component {
             let users_id = x.users_id;
             let name = x.group_name;
 
-            return <a className="lead ml-3 d-inline-block" href={"group/" + id}>{name}</a>
+            return <a className="lead ml-3 d-inline-block files" href={"group/" + id}>{name}</a>
 
         });
     } else {
@@ -31,7 +31,7 @@ class Home extends React.Component {
                 let id = this.props.cases[i].id;
                 let name = this.props.cases[i].name;
 
-                array.push(<a className="lead ml-3 d-inline-block d-none" href={"case/" + id}>{name}</a>)
+                array.push(<a className="lead ml-3 d-inline-block d-none files" href={"case/" + id}>{name}</a>)
                 cases = array
             };
         };
@@ -67,7 +67,7 @@ class Home extends React.Component {
 
           {alertUser}
           <div className="editProfile">
-                <a className="btn btn-primary btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
+                <a className="btn btn-info btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
           </div>
           <div className="profile">
                 <img className="img-thumbnail profilePic mb-5"src={this.props.user[0].image}/>
@@ -95,7 +95,7 @@ class Home extends React.Component {
                         </span>
                     </u>
                     <span>
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModalLong">
                           <i class='bx bx-folder-plus'></i>
                         </button>
                     </span>
@@ -119,7 +119,7 @@ class Home extends React.Component {
                             <input type="text" maxlength="20" className="form-control rounded" name="group_name" placeholder="Folder Name" required/>
                           </div>
                           <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                          <button type="submit" className="btn btn-primary"><i class='bx bx-save' ></i></button>
+                          <button type="submit" className="btn btn-info"><i class='bx bx-save' ></i></button>
                         </form>
                       </div>
                     </div>
@@ -132,7 +132,7 @@ class Home extends React.Component {
           </div>
 
           <div className="cases container mb-5">
-                <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-primary btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
+                <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-info btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
                 <div>
                     {cases}
                 </div>

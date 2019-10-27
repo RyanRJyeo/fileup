@@ -30,8 +30,9 @@ class Register extends React.Component {
 
             {alertUser}
             <h1 className="display-4 text-center mt-5">Welcome to FileUp</h1>
-            <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action='/register'>
+            <div className="mt-5 login-form">
+                <form method='POST' action='/register'>
+                  <h3 className="mb-4 text-center text-white">Register</h3>
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="name" placeholder="Name" required/>
                   </div>
@@ -47,11 +48,10 @@ class Register extends React.Component {
                   <div className="form-group">
                     <input type="text" className="form-control d-none" name="image" value="https://magazine.fbk.eu/wp-content/uploads/2017/09/icona.jpg" required/>
                   </div>
-                  <button type="submit" className="btn btn-primary">Register</button>
+                  <button type="submit" className="btn btn-info mb-3">Register</button>
                 </form>
-                <br/>
-                <form className="col align-self-center" method='GET' action='/login'>
-                    <button type="submit" className="btn btn-primary">Already a user? Login here</button>
+                <form method='GET' action='/login'>
+                    <button type="submit" className="btn btn-info">Already a user? Login here</button>
                 </form>
             </div>
 

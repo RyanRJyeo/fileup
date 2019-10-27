@@ -19,7 +19,7 @@ class FindCase extends React.Component {
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Age: {age}</h6>
                         <p class="card-text">Contact: {contact}</p>
-                        <a href={"/case/" + id} class="card-link">Get this file</a>
+                        <a href={"/case/" + id} class="card-link files">Get this file</a>
                       </div>
                     </div>
 
@@ -44,7 +44,7 @@ class FindCase extends React.Component {
             <Navbar/>
 
             <h3 className="text-center mt-5">Search Results:</h3>
-                <div className=" row justify-content-center">
+                <div className=" row justify-content-center mb-5">
                     {cases}
                 </div>
 

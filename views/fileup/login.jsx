@@ -7,7 +7,7 @@ class Login extends React.Component {
     let alertUser;
 
     if (this.props.username){
-        alertUser =     <div class="alert alert-primary text-center" role="alert">
+        alertUser =     <div class="alert alert-info text-center" role="alert">
                           Successfully registered as {this.props.username}
                         </div>
     } else {
@@ -30,19 +30,19 @@ class Login extends React.Component {
 
             <h1 className="display-4 text-center mt-5">Welcome to FileUp</h1>
 
-            <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action='/login'>
+            <div className="mt-5 login-form">
+                <form  method='POST' action='/login'>
+                  <h3 className="mb-4 text-center text-white">Login</h3>
                   <div className="form-group">
                     <input type="email" className="form-control rounded" name="email" placeholder="Email" required/>
                   </div>
                   <div className="form-group">
                     <input type="password" className="form-control rounded" name="password" placeholder="Password" required/>
                   </div>
-                  <button type="submit" className="btn btn-primary">Login</button>
+                  <button type="submit" className="btn btn-info mb-3">Login</button>
                 </form>
-                <br/>
-                <form className="col align-self-center" method='GET' action='/register'>
-                    <button type="submit" className="btn btn-primary">New to us? Register here</button>
+                <form  method='GET' action='/register'>
+                    <button type="submit" className="btn btn-info">New to us? Register here</button>
                 </form>
             </div>
 

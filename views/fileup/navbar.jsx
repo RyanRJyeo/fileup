@@ -9,7 +9,7 @@ class Navbar extends React.Component {
                 <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.3/css/boxicons.min.css' rel='stylesheet'/>
             </head>
             <header>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
                   <span>
                     <a class="navbar-brand" href="/">FileUp</a>
@@ -20,16 +20,31 @@ class Navbar extends React.Component {
                   </button>
 
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">
+                        <a class="nav-link" href="/profilePic">Connections</a>
+                      </li>
+                      <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Invites
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="/followers">Invites Sent</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="/followYou">Invites Received</a>
+                        </div>
+                      </li>
+                    </ul>
                     <form class="form-inline my-2 my-lg-0 mr-4" method='POST' action='/findCase'>
                       <input class="form-control mr-sm-2" type="text" name="name" placeholder="Find Your Files" required/>
-                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
+                      <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
                     </form>
                     <form class="form-inline my-2 my-lg-0 mr-4" method='POST' action='/findUsers'>
                       <input class="form-control mr-sm-2" type="text" name="username" placeholder="Find Other Users" required/>
-                      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
+                      <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
                     </form>
                     <div class="navbar-nav">
-                      <a class="btn btn-outline-dark" href="/logout">Log Out</a>
+                      <a class="btn btn-outline-info" href="/logout">Log Out</a>
                     </div>
                   </div>
 

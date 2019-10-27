@@ -12,14 +12,16 @@ class FindUsers extends React.Component {
             let id = x.id;
             let name = x.name;
             let email = x.email;
+            let image = x.image;
             let company_name = x.company_name
 
             return  <div class="card mr-3 mt-5">
+                      <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Email: {email}</h6>
                         <p class="card-text">Company Name: {company_name}</p>
-                        <a href={"/case/" + id} class="card-link">Get this User</a>
+                        <a href={"/case/" + id} class="card-link files">Get this User</a>
                       </div>
                     </div>
 
@@ -44,7 +46,7 @@ class FindUsers extends React.Component {
             <Navbar/>
 
             <h3 className="text-center mt-5">Search Results:</h3>
-                <div className=" row justify-content-center">
+                <div className=" row justify-content-center mb-5">
                     {users}
                 </div>
 
