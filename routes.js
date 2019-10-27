@@ -41,6 +41,9 @@ module.exports = (app, allModels) => {
   app.post('/case/commentDelete', controllerCallbacks.commentDelete);
   app.post('/findCase', controllerCallbacks.findCase);
   app.post('/findUsers', controllerCallbacks.findUsers);
+  app.post('/sendInvite', controllerCallbacks.sendInvite);
+  app.get('/invitesSent', controllerCallbacks.invitesSent);
+  app.get('/invitesSentAjax', controllerCallbacks.invitesSentAjax);
   app.get('/', controllerCallbacks.home);
 
 };

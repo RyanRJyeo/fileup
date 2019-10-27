@@ -48,3 +48,14 @@ SELECT groups.id AS group_id, groups.users_id, group_name, cases.id AS cases_id,
 FROM groups LEFT JOIN cases
 ON (groups.id = group_id)
 WHERE groups.id = 1;
+
+
+-- get all users who I've sent invites
+WITH invites_sent AS (SELECT * FROM invites WHERE sender = ($1)) SELECT * FROM users WHERE
+
+
+
+SELECT sender, receiver, users.id AS user_id, name, email, company_name, password, image
+FROM invites LEFT JOIN users
+ON (receiver = users.id)
+WHERE sender = ($1)

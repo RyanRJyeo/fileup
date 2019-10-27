@@ -26,12 +26,12 @@ class Navbar extends React.Component {
                       </li>
                       <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Invites
+                          Invites <span class="badge badge-light invitesStuff"></span>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="/followers">Invites Sent</a>
+                          <a class="dropdown-item" href="/invitesSent">Invites Sent <span class="badge badge-dark invitesSent"></span></a>
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="/followYou">Invites Received</a>
+                          <a class="dropdown-item" href="/followYou">Invites Received <span class="badge badge-dark invitesReceived"></span></a>
                         </div>
                       </li>
                     </ul>

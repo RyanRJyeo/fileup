@@ -13,7 +13,54 @@ class FindUsers extends React.Component {
             let name = x.name;
             let email = x.email;
             let image = x.image;
-            let company_name = x.company_name
+            let company_name;
+            if (x.company_name){
+                company_name = x.company_name
+            } else {
+                company_name = "Nil"
+            }
+            let button;
+
+            if (this.props.invites){
+                for(let i=0; i < this.props.invites.length; i++ ){
+                    if(id === this.props.invites[i].sender){
+                        button =<form className="col align-self-center" method='POST' action='/sendInvite'>
+                                  <div className="form-group">
+                                    <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={id} required/>
+                                  </div>
+                                  <div className="form-group">
+                                    <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={this.props.user_id} required/>
+                                  </div>
+                                  <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
+                                </form>
+                    } else if (id === this.props.invites[i].receiver){
+                        button = <p className="badge badge-pill badge-info text-white">You've already sent a request to this user</p>
+                    } else if (id === this.props.invites[i].sender && id === this.props.invites[i].receiver){
+                        button = <a type="submit" className="badge badge-pill badge-info text-white">See This User's Profile</a>
+                    } else {
+                        button =<form className="col align-self-center" method='POST' action='/sendInvite'>
+                                  <div className="form-group">
+                                    <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={this.props.user_id} required/>
+                                  </div>
+                                  <div className="form-group">
+                                    <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
+                                  </div>
+                                  <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                </form>
+                    }
+                };
+            } else {
+                button =    <form className="col align-self-center" method='POST' action='/sendInvite'>
+                              <div className="form-group">
+                                <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={this.props.user_id} required/>
+                              </div>
+                              <div className="form-group">
+                                <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
+                              </div>
+                              <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                            </form>
+            };
+
 
             return  <div class="card mr-3 mt-5">
                       <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
@@ -21,7 +68,7 @@ class FindUsers extends React.Component {
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Email: {email}</h6>
                         <p class="card-text">Company Name: {company_name}</p>
-                        <a href={"/case/" + id} class="card-link files">Get this User</a>
+                        {button}
                       </div>
                     </div>
 
@@ -30,6 +77,7 @@ class FindUsers extends React.Component {
     } else {
         users = <p className="lead text-center mt-5">No such user found</p>
     }
+
 
 
 

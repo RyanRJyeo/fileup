@@ -776,6 +776,94 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getAllInvites = (callback) => {
+
+    let query = "SELECT * FROM invites";
+
+
+    dbPoolInstance.query(query, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getInvitesSent = (sender_id, receiver_id, callback) => {
+
+    inputValues=[sender_id, receiver_id];
+
+    let query = "INSERT INTO invites (sender, receiver) VALUES ($1, $2)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getAllSentInvites = (user_id, callback) => {
+
+    inputValues=[user_id];
+
+    let query = "SELECT sender, receiver, users.id AS user_id, name, email, company_name, password, image FROM invites LEFT JOIN users ON (receiver = users.id) WHERE sender = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
   return {
     getRegister,
     getLogin,
@@ -802,5 +890,8 @@ module.exports = (dbPoolInstance) => {
     getCommentDeleted,
     getSearchCase,
     getSearchUsers,
+    getAllInvites,
+    getInvitesSent,
+    getAllSentInvites,
   };
 };
