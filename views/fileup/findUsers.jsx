@@ -24,10 +24,56 @@ class FindUsers extends React.Component {
 
 
             if (this.props.friends){
-                if (this.props.friends[0].first_user === x.id || this.props.friends[0].second_user === x.id ){
-                    button = <button type="submit" className="badge badge-pill badge-info text-white">See This User's Profile</button>
-                }
+                for (let i=0; i < this.props.friends.length; i++){
+                    if (this.props.friends[i].first_user === id || this.props.friends[i].second_user === id ){
+                        button = <button type="submit" className="badge badge-pill badge-info text-white">See This User's Profile</button>
+                    } else {
+
+                        if (this.props.invites){
+                            for(let i=0; i < this.props.invites.length; i++ ){
+                                if(id === this.props.invites[i].sender){
+                                    button =<form className="col align-self-center" method='POST' action='/acceptRequest'>
+                                              <div className="form-group">
+                                                <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={this.props.user_id} required/>
+                                              </div>
+                                              <div className="form-group">
+                                                <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
+                                              </div>
+                                              <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
+                                            </form>
+                                } else if (id === this.props.invites[i].receiver){
+                                    button = <p className="badge badge-pill badge-info text-white">You've already sent a request to this user</p>
+                                } else if (id === this.props.invites[i].sender && id === this.props.invites[i].receiver){
+                                    button = <button type="submit" className="badge badge-pill badge-info text-white">See This User's Profile</button>
+                                } else {
+                                    button =<form className="col align-self-center" method='POST' action='/sendInvite'>
+                                              <div className="form-group">
+                                                <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={this.props.user_id} required/>
+                                              </div>
+                                              <div className="form-group">
+                                                <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
+                                              </div>
+                                              <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                            </form>
+                                }
+                            };
+                        } else {
+                            button =    <form className="col align-self-center" method='POST' action='/sendInvite'>
+                                          <div className="form-group">
+                                            <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={this.props.user_id} required/>
+                                          </div>
+                                          <div className="form-group">
+                                            <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
+                                          </div>
+                                          <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                        </form>
+                        };
+
+                    };
+                };
             } else {
+
+
                 if (this.props.invites){
                     for(let i=0; i < this.props.invites.length; i++ ){
                         if(id === this.props.invites[i].sender){
@@ -113,7 +159,7 @@ class FindUsers extends React.Component {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         </body>
-        <script src="script.js"></script>
+
       </html>
     );
   }

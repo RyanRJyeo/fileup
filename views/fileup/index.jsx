@@ -5,36 +5,16 @@ class Home extends React.Component {
 
     let Navbar = require('./navbar.jsx');
 
-    let groups;
-
-    if (this.props.groups){
-        groups = this.props.groups.map(x=>{
-            let id = x.id;
-            let users_id = x.users_id;
-            let name = x.group_name;
-
-            return <a className="lead ml-3 d-inline-block files" href={"group/" + id}>{name}</a>
-
-        });
-    } else {
-        groups = <p>You have no folders yet, let's create one!</p>
-    }
-
-
     let cases;
 
     if (this.props.cases){
-        let array = []
-        for (let i=0; i<this.props.cases.length; i++){
-            if(this.props.cases[i].group_id == null){
+        cases = this.props.cases.map(x=>{
+            let id = x.id;
+            let name = x.name
 
-                let id = this.props.cases[i].id;
-                let name = this.props.cases[i].name;
+            return <a className="lead ml-3 d-inline-block d-none files" href={"case/" + id}>{name}</a>
 
-                array.push(<a className="lead ml-3 d-inline-block d-none files" href={"case/" + id}>{name}</a>)
-                cases = array
-            };
-        };
+        });
     } else {
         cases = <p>You have no files yet, let's create one!</p>
     }
@@ -84,50 +64,6 @@ class Home extends React.Component {
                         <p><u>Company Name:</u></p>
                         <p className="lead info">{this.props.user[0].company_name}</p>
                     </section>
-                </div>
-          </div>
-
-          <div className="cases container mb-5">
-                <h3 className="mt-5">
-                    <u>
-                        <span className="mr-3">
-                            Your Folders
-                        </span>
-                    </u>
-                    <span>
-                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#exampleModalLong">
-                          <i class='bx bx-folder-plus'></i>
-                        </button>
-                    </span>
-                </h3>
-
-                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Create Folder</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <form className="col align-self-center" method='POST' action='/groupCreate'>
-                          <div className="form-group">
-                            <input type="number" className="form-control rounded d-none" name="user_id" value={this.props.user[0].id} readonly="true" required/>
-                          </div>
-                          <div className="form-group">
-                            <input type="text" maxlength="20" className="form-control rounded" name="group_name" placeholder="Folder Name" required/>
-                          </div>
-                          <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                          <button type="submit" className="btn btn-info"><i class='bx bx-save' ></i></button>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                    {groups}
                 </div>
           </div>
 

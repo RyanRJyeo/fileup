@@ -23,7 +23,7 @@ class CommentEdit extends React.Component {
 
             <h2 className="text-center mt-5">Edit Comment: {this.props.results[0].name}</h2>
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/case/" + this.props.results[0].case_id + "/commentEdit"}>
+                <form className="col align-self-center" method='POST' action={"/caseCommentsEdit/" + this.props.results[0].case_id}>
                   <div className="form-group">
                     <input type="number" className="form-control rounded d-none" readonly="true" name="comment_id" value={this.props.results[0].id} required/>
                   </div>
@@ -49,7 +49,7 @@ class CommentEdit extends React.Component {
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
+
         </body>
       </html>
     );

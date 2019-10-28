@@ -17,37 +17,46 @@ module.exports = (app, allModels) => {
 
   app.get('/register', controllerCallbacks.register);
   app.post('/register', controllerCallbacks.registerUser);
+
   app.get('/login', controllerCallbacks.login);
   app.post('/login', controllerCallbacks.loginUser);
+
   app.get('/logout', controllerCallbacks.logout)
+
   app.get('/profileEdit', controllerCallbacks.profileEdit);
   app.post('/profileEdit', controllerCallbacks.profileEditing);
   app.post('/changePassword', controllerCallbacks.changePassword);
-  app.post('/groupCreate', controllerCallbacks.groupCreate);
-  app.get('/group/:id', controllerCallbacks.groupPage);
-  app.post('/groupEdit', controllerCallbacks.groupEdit);
-  app.post('/groupDelete', controllerCallbacks.groupDelete);
+
   app.get('/caseCreate', controllerCallbacks.caseCreate);
   app.post('/caseCreate', controllerCallbacks.addInCase);
-  app.post('/case/:id/delete', controllerCallbacks.deleteCase);
-  app.get('/case/:id/edit', controllerCallbacks.caseEdit);
-  app.post('/case/:id/edit', controllerCallbacks.caseEditing);
-  app.post('/case/:id/comments', controllerCallbacks.comments);
-  app.get('/case/:id/preference', controllerCallbacks.preference);
-  app.post('/case/:id/preference', controllerCallbacks.preferenceEdit);
-  app.get('/case/:id/commentEdit', controllerCallbacks.commentEdit);
-  app.post('/case/:id/commentEdit', controllerCallbacks.commentEditing);
+
   app.get('/case/:id', controllerCallbacks.case);
-  app.post('/case/commentDelete', controllerCallbacks.commentDelete);
+  app.post('/case/:id/delete', controllerCallbacks.deleteCase);
+
+  app.get('/caseEdit/:id', controllerCallbacks.caseEdit);
+  app.post('/caseEdit/:id', controllerCallbacks.caseEditing);
+
+  app.get('/casePreference/:id', controllerCallbacks.preference);
+  app.post('/casePreference/:id', controllerCallbacks.preferenceEdit);
+
+  app.post('/caseComments/:id', controllerCallbacks.comments);
+  app.post('/caseComment/delete', controllerCallbacks.commentDelete);
+  app.get('/caseCommentsEdit/:id', controllerCallbacks.commentEdit);
+  app.post('/caseCommentsEdit/:id', controllerCallbacks.commentEditing);
+
   app.post('/findCase', controllerCallbacks.findCase);
   app.post('/findUsers', controllerCallbacks.findUsers);
+
   app.post('/sendInvite', controllerCallbacks.sendInvite);
   app.get('/invitesSent', controllerCallbacks.invitesSent);
   app.get('/invitesSentAjax', controllerCallbacks.invitesSentAjax);
+
   app.post('/acceptRequest', controllerCallbacks.acceptRequest);
   app.get('/invitesReceived', controllerCallbacks.invitesReceived);
   app.get('/invitesReceivedAjax', controllerCallbacks.invitesReceivedAjax);
+
   app.get('/connections', controllerCallbacks.connections);
+
   app.get('/', controllerCallbacks.home);
 
 };

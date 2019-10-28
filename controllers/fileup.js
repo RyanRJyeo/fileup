@@ -120,19 +120,16 @@ module.exports = (db) => {
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getUser(user_id, (error, user) => {
-                db.fileup.getGroups(user_id, (error, groups)=>{
-                    db.fileup.getCases(user_id, (error, cases)=>{
+                db.fileup.getCases(user_id, (error, cases)=>{
 
-                        let data = {
-                            user: user,
-                            groups: groups,
-                            cases: cases,
-                            alertUser: alertUser
-                        }
+                    let data = {
+                        user: user,
+                        cases: cases,
+                        alertUser: alertUser
+                    }
 
-                        setTimeout(function(){alertUser = null}, 200);
-                        response.render('fileup/index', data);
-                    })
+                    setTimeout(function(){alertUser = null}, 200);
+                    response.render('fileup/index', data);
                 });
           });
         } else {
@@ -223,102 +220,6 @@ let changePasswordAlert;
 
 
 
-
-//============================================================
-  let groupCreateCC = (request, response) => {
-
-    let user_id = request.cookies['user_id'];
-    let hashedValue = sha256( SALT + user_id );
-
-        if( request.cookies['hasLoggedIn'] === hashedValue){
-            let group_name = request.body.group_name;
-            db.fileup.getGroupAdded(group_name, user_id, (err, results)=>{
-
-                response.redirect('/');
-
-            });
-        } else {
-            response.redirect('/login');
-        };
-  };
-//============================================================
-
-
-
-
-
-//============================================================
-  let groupPageCC = (request, response) => {
-
-    let user_id = request.cookies['user_id'];
-    let hashedValue = sha256( SALT + user_id );
-
-        if( request.cookies['hasLoggedIn'] === hashedValue){
-            let group_id = request.params.id;
-            db.fileup.getGroupPage(group_id, (err, results)=>{
-                let verifyUser = parseInt(results[0].users_id);
-                let verifyUser2 = parseInt(user_id);
-                if (verifyUser === verifyUser2){
-
-                    response.render('fileup/groupPage', {results});
-
-                } else {
-                    response.redirect('/');
-                };
-            });
-        } else {
-            response.redirect('/login');
-        };
-  };
-//============================================================
-
-
-
-
-//============================================================
-  let groupEditCC = (request, response) => {
-
-    let user_id = request.cookies['user_id'];
-    let hashedValue = sha256( SALT + user_id );
-
-        if( request.cookies['hasLoggedIn'] === hashedValue){
-            let group_id = request.body.group_id;
-            let group_name = request.body.group_name;
-            db.fileup.getGroupEdited(group_id, group_name, (err, results)=>{
-
-                response.redirect('/group/' + group_id);
-
-            });
-        } else {
-            response.redirect('/login');
-        };
-  };
-//============================================================
-
-
-
-//============================================================
-  let groupDeleteCC = (request, response) => {
-
-    let user_id = request.cookies['user_id'];
-    let hashedValue = sha256( SALT + user_id );
-
-        if( request.cookies['hasLoggedIn'] === hashedValue){
-            let group_id = request.body.group_id;
-            alertUser = "Folder " + request.body.group_name + " has been deleted"
-            db.fileup.getGroupDeleted(group_id, (err, results)=>{
-
-                response.redirect('/');
-
-            });
-        } else {
-            response.redirect('/login');
-        };
-  };
-//============================================================
-
-
-
 //============================================================
   let caseCreateCC = (request, response) => {
 
@@ -326,15 +227,9 @@ let changePasswordAlert;
     let hashedValue = sha256( SALT + user_id );
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            db.fileup.getGroups(user_id, (err, groups)=>{
 
-                let data = {
-                    id: user_id,
-                    groups: groups
-                }
-                response.render('fileup/caseCreate', data);
+                response.render('fileup/caseCreate');
 
-            });
         } else {
             response.redirect('/login');
         };
@@ -374,16 +269,10 @@ let changePasswordAlert;
     let hashedValue = sha256( SALT + user_id );
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
-            let group;
-            if(isNaN(request.body.group_id)){
-                group = null;
-            } else {
-                group = request.body.group_id
-            };
             let name = request.body.name;
             let age = request.body.age;
             let contact = request.body.contact;
-            db.fileup.getCaseAdded(user_id, group, name, age, contact, (err, results)=>{
+            db.fileup.getCaseAdded(user_id, name, age, contact, (err, results)=>{
                 if (results){
                     response.redirect('/');
                 } else {
@@ -411,23 +300,22 @@ let changePasswordAlert;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, cases) => {
+                console.log("cases is")
+                console.log(cases)
                 let verifyUser = parseInt(cases[0].users_id);
                 let verifyUser2 = parseInt(user_id);
                 if (verifyUser === verifyUser2){
-                    db.fileup.getOneGroup(cases[0].group_id, (error, group)=>{
-                        db.fileup.getPreference(cases[0].id, (error, preference)=>{
-                            db.fileup.getComments(cases[0].id, (err, comments)=>{
+                    db.fileup.getPreference(cases[0].id, (error, preference)=>{
+                        db.fileup.getComments(cases[0].id, (err, comments)=>{
 
-                                let data= {
-                                    user_name: user_name,
-                                    cases: cases,
-                                    group: group,
-                                    preference: preference,
-                                    comments: comments
-                                };
+                            let data= {
+                                user_name: user_name,
+                                cases: cases,
+                                preference: preference,
+                                comments: comments
+                            };
 
-                                response.render('fileup/case', data);
-                            });
+                            response.render('fileup/case', data);
                         });
                     });
                 } else {
@@ -455,15 +343,9 @@ let changePasswordAlert;
                 let verifyUser = parseInt(results[0].users_id);
                 let verifyUser2 = parseInt(user_id);
                 if (verifyUser === verifyUser2){
-                    db.fileup.getGroups(user_id, (error, group)=>{
 
-                        let data = {
-                            group: group,
-                            results: results
-                        };
+                        response.render('fileup/caseEdit', {results});
 
-                        response.render('fileup/caseEdit', data);
-                    });
                 } else {
                     response.redirect('/');
                 };
@@ -487,16 +369,10 @@ let changePasswordAlert;
         db.fileup.getOneCase(request.body.id, (error, results) => {
             let requestCaseID = request.body.id;
             let requestUserID = request.body.users_id;
-            let group;
-            if(isNaN(request.body.group_id)){
-                group = null;
-            } else {
-                group = request.body.group_id
-            };
             let requestName = request.body.name;
             let requestAge = request.body.age;
             let requestContact = request.body.contact;
-            db.fileup.getCaseEdited(requestCaseID, requestUserID, group, requestName, requestAge, requestContact, (error, results) => {
+            db.fileup.getCaseEdited(requestCaseID, requestUserID, requestName, requestAge, requestContact, (error, results) => {
 
                 response.redirect('/case/'+requestCaseID);
 
@@ -712,7 +588,7 @@ let changePasswordAlert;
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let name = request.body.username;
             db.fileup.getSearchUsers(name, user_id, (error, results) => {
-                db.fileup.getAllInvites((err, invites)=>{
+                db.fileup.getAllInvites(user_id, (err, invites)=>{
                     db.fileup.getAllFriends(user_id, (err, friends)=>{
 
                         let data = {
@@ -903,10 +779,6 @@ let changePasswordAlert;
     profileEdit: profileEditCC,
     profileEditing: profileEditingCC,
     changePassword: changePasswordCC,
-    groupCreate: groupCreateCC,
-    groupPage: groupPageCC,
-    groupEdit: groupEditCC,
-    groupDelete: groupDeleteCC,
     caseCreate: caseCreateCC,
     deleteCase: deleteCaseCC,
     addInCase: addInCaseCC,

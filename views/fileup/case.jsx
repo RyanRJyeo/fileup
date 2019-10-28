@@ -21,13 +21,13 @@ class Case extends React.Component {
                             </tbody>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/case/" + this.props.cases[0].id + "/preference"}>Edit Preferences</a>
+                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].id}>Edit Preferences</a>
                             </div>
     } else {
         preferenceContent = <p className="text-center mt-5">Preferences have not been set yet</p>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/case/" + this.props.cases[0].id + "/preference"}>Add Preferences</a>
+                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].id}>Add Preferences</a>
                             </div>
     }
 
@@ -64,7 +64,7 @@ class Case extends React.Component {
                             <hr className="my-4"/>
                             <p className="comments">{content}</p>
                                 <div className="row">
-                                    <form className="ml-4 align-self-center" method='GET' action={"/case/" + case_id + "/commentEdit"}>
+                                    <form className="ml-4 align-self-center" method='GET' action={"/caseCommentsEdit/" + case_id}>
                                         <div className="form-group">
                                             <input type="number" className="form-control rounded d-none" name="comment_id" value={comment_id} readonly="true" required/>
                                         </div>
@@ -78,7 +78,7 @@ class Case extends React.Component {
                                     <p>Are you sure you want to delete this comment?</p>
                                     <p>It will be permanently removed from the database</p>
 
-                                    <form className="col align-self-center" method='POST' action='/case/commentDelete'>
+                                    <form className="col align-self-center" method='POST' action='/caseComment/delete'>
                                         <div className="form-group">
                                             <input type="number" className="form-control rounded d-none" name="comment_id" value={comment_id} readonly="true" required/>
                                         </div>
@@ -115,7 +115,7 @@ class Case extends React.Component {
 
             <main className="container">
                 <div className="editProfile container text-right">
-                    <a className="btn btn-sm btn-info mt-3 mr-4" href={"/case/" + this.props.cases[0].id + "/edit"}><i class='bx bx-edit-alt' ></i></a>
+                    <a className="btn btn-sm btn-info mt-3 mr-4" href={"/caseEdit/" + this.props.cases[0].id}><i class='bx bx-edit-alt' ></i></a>
                     <button class="btn btn-sm btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class='bx bxs-eraser' ></i>
                     </button>
@@ -165,7 +165,7 @@ class Case extends React.Component {
 
                     {comments}
 
-                    <form className="col align-self-center" method='POST' action={"/case/" + this.props.cases[0].id + "/comments"}>
+                    <form className="col align-self-center" method='POST' action={"/caseComments/" + this.props.cases[0].id}>
                         <div className="form-group">
                             <div className="form-group">
                                 <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].id} readonly="true" required/>
@@ -178,6 +178,12 @@ class Case extends React.Component {
                         <button type="submit" className="btn btn-outline-info btn-sm mb-5">Comment</button>
                     </form>
                 </div>
+
+
+                <form className="col text-right" method='GET' action="/connections/">
+                    <button type="submit" className="btn btn-outline-success btn-sm mb-5">Share <i class='bx bx-share-alt'></i></button>
+                </form>
+
 
             </main>
 

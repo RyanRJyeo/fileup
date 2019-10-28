@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS user_cases(
 CREATE TABLE IF NOT EXISTS cases(
 	id SERIAL PRIMARY KEY,
 	users_id INTEGER,
-	group_id INTEGER,
 	name VARCHAR(20),
 	age INTEGER,
 	contact VARCHAR(20)
@@ -44,14 +43,6 @@ CREATE TABLE IF NOT EXISTS comments(
 	created_at TIMESTAMPTZ DEFAULT now(),
 	updated_at TEXT
 );
-
-
-CREATE TABLE IF NOT EXISTS groups(
-	id SERIAL PRIMARY KEY,
-	users_id INTEGER,
-	group_name VARCHAR(20)
-);
-
 
 
 CREATE TABLE IF NOT EXISTS invites(

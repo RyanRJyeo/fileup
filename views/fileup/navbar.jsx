@@ -50,6 +50,7 @@ class Navbar extends React.Component {
 
                 </nav>
             </header>
+
         </html>
     );
   }
