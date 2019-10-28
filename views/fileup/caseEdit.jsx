@@ -42,12 +42,6 @@ class CaseEdit extends React.Component {
                     <div className="form-group">
                         <input type="text" className="form-control rounded d-none" name="users_id" value={this.props.results[0].users_id} readonly="true"  required/>
                     </div>
-                    <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect1" name="group_id">
-                        {groups}
-                        <option>Folder not needed for this file</option>
-                    </select>
-                    </div>
                     <div className="form-group">
                         <p>Name:</p>
                         <input type="text" className="form-control rounded" name="name" placeholder={this.props.results[0].name} required/>

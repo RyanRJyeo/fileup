@@ -101,16 +101,6 @@ class Case extends React.Component {
         comments = <p className="text-center mt-5">No comments for this file yet</p>
     }
 
-
-    let group_name;
-
-    if (this.props.group){
-        group_name = <p>{this.props.group[0].group_name}</p>
-    } else {
-        group_name = <p>Not assigned to a folder yet</p>
-    }
-
-
     return (
       <html>
         <head>
@@ -156,17 +146,13 @@ class Case extends React.Component {
                 <h1 className="row justify-content-center">{this.props.cases[0].name}</h1>
 
                 <div className="row text-center mt-5">
-                    <div className="basicInfoContent col">
+                    <div className="col">
                         <p><u>Age:</u></p>
                         <p className="lead" >{this.props.cases[0].age}</p>
                     </div>
                     <div className="col">
                         <p><u>Contact:</u></p>
                         <p className="lead" >{this.props.cases[0].contact}</p>
-                    </div>
-                    <div className="col">
-                        <p><u>Folder:</u></p>
-                        <p className="lead">{group_name}</p>
                     </div>
                 </div>
 

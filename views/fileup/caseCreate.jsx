@@ -37,12 +37,6 @@ class CaseCreate extends React.Component {
                   <div className="form-group">
                     <input type="number" className="form-control rounded d-none" readonly="true" name="users_id" value={this.props.id} required/>
                   </div>
-                  <div class="form-group">
-                    <select class="form-control" id="exampleFormControlSelect1" name="group_id">
-                        {groups}
-                        <option>Folder not needed for this file</option>
-                    </select>
-                  </div>
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>
                   </div>
