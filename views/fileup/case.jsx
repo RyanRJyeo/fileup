@@ -46,7 +46,6 @@ class Case extends React.Component {
             let updated_at;
             if(x.updated_at){
                 let updating = new Date(x.updated_at)
-                console.log("updated at is "+ updating)
                 let upDate = `${updating.getFullYear()}/${updating.getMonth() + 1}/${updating.getDate()}`;
                 let upTime = `${updating.getHours()}:` + `${updating.getMinutes()}:${updating.getSeconds()}`;
                 updated_at =    <div>

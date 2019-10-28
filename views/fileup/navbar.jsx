@@ -22,7 +22,7 @@ class Navbar extends React.Component {
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                       <li class="nav-item active">
-                        <a class="nav-link" href="/profilePic">Connections</a>
+                        <a class="nav-link" href="/connections">Connections</a>
                       </li>
                       <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,7 +31,7 @@ class Navbar extends React.Component {
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                           <a class="dropdown-item" href="/invitesSent">Invites Sent <span class="badge badge-dark invitesSent"></span></a>
                           <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="/followYou">Invites Received <span class="badge badge-dark invitesReceived"></span></a>
+                          <a class="dropdown-item" href="/invitesReceived">Invites Received <span class="badge badge-dark invitesReceived"></span></a>
                         </div>
                       </li>
                     </ul>

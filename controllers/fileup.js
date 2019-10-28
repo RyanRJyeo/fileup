@@ -69,7 +69,7 @@ module.exports = (db) => {
   let logoutCC = (request, response) => {
 
     response.clearCookie('user_id', { path: '/' });
-    response.clearCookie('username', { path: '/' });
+    response.clearCookie('user_name', { path: '/' });
     response.clearCookie('hasLoggedIn', { path: '/' });
 
     response.redirect('/');
@@ -711,16 +711,21 @@ let changePasswordAlert;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let name = request.body.username;
-            db.fileup.getSearchUsers(name, (error, results) => {
+            db.fileup.getSearchUsers(name, user_id, (error, results) => {
                 db.fileup.getAllInvites((err, invites)=>{
+                    db.fileup.getAllFriends(user_id, (err, friends)=>{
 
-                    let data = {
-                        results: results,
-                        invites: invites,
-                        user_id: user_id
-                    }
+                        let data = {
+                            results: results,
+                            invites: invites,
+                            friends: friends,
+                            user_id: user_id
+                        }
 
-                    response.render('fileup/findUsers', data);
+                        response.render('fileup/findUsers', data);
+
+
+                    });
                 });
             });
         } else {
@@ -798,6 +803,91 @@ let changePasswordAlert;
 
 
 
+//============================================================
+  let acceptRequestCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            let sender_id = request.body.sender_id;
+            let receiver_id = request.body.receiver_id;
+            db.fileup.getRequestAccepted(sender_id, receiver_id, (error, results) => {
+
+                response.redirect('/connections');
+
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+//============================================================
+  let invitesReceivedCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            db.fileup.getAllReceivedInvites(user_id, (error, results) => {
+
+                let data = {
+                    results: results,
+                    user_id: user_id
+                }
+                response.render('fileup/allInvitesReceived', data);
+
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+//============================================================
+  let invitesReceivedAjaxCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            db.fileup.getAllReceivedInvites(user_id, (error, results) => {
+
+                response.send({results});
+
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+//============================================================
+  let connectionsCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            db.fileup.getAllConnections(user_id, (error, results) => {
+                response.render('fileup/allConnections', {results})
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+
   /**
    * ===========================================
    * Export controller functions as a module
@@ -834,6 +924,10 @@ let changePasswordAlert;
     sendInvite: sendInviteCC,
     invitesSent: invitesSentCC,
     invitesSentAjax: invitesSentAjaxCC,
+    acceptRequest: acceptRequestCC,
+    invitesReceived: invitesReceivedCC,
+    invitesReceivedAjax: invitesReceivedAjaxCC,
+    connections: connectionsCC,
   };
 
 }

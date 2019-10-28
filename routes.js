@@ -29,7 +29,6 @@ module.exports = (app, allModels) => {
   app.post('/groupDelete', controllerCallbacks.groupDelete);
   app.get('/caseCreate', controllerCallbacks.caseCreate);
   app.post('/caseCreate', controllerCallbacks.addInCase);
-  app.get('/case/:id', controllerCallbacks.case);
   app.post('/case/:id/delete', controllerCallbacks.deleteCase);
   app.get('/case/:id/edit', controllerCallbacks.caseEdit);
   app.post('/case/:id/edit', controllerCallbacks.caseEditing);
@@ -38,12 +37,17 @@ module.exports = (app, allModels) => {
   app.post('/case/:id/preference', controllerCallbacks.preferenceEdit);
   app.get('/case/:id/commentEdit', controllerCallbacks.commentEdit);
   app.post('/case/:id/commentEdit', controllerCallbacks.commentEditing);
+  app.get('/case/:id', controllerCallbacks.case);
   app.post('/case/commentDelete', controllerCallbacks.commentDelete);
   app.post('/findCase', controllerCallbacks.findCase);
   app.post('/findUsers', controllerCallbacks.findUsers);
   app.post('/sendInvite', controllerCallbacks.sendInvite);
   app.get('/invitesSent', controllerCallbacks.invitesSent);
   app.get('/invitesSentAjax', controllerCallbacks.invitesSentAjax);
+  app.post('/acceptRequest', controllerCallbacks.acceptRequest);
+  app.get('/invitesReceived', controllerCallbacks.invitesReceived);
+  app.get('/invitesReceivedAjax', controllerCallbacks.invitesReceivedAjax);
+  app.get('/connections', controllerCallbacks.connections);
   app.get('/', controllerCallbacks.home);
 
 };

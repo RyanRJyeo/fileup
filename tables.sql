@@ -59,3 +59,10 @@ CREATE TABLE IF NOT EXISTS invites(
 	sender INTEGER,
 	receiver INTEGER
 );
+
+
+CREATE TABLE IF NOT EXISTS friends(
+	id SERIAL PRIMARY KEY,
+	first_user INTEGER,
+	second_user INTEGER
+);

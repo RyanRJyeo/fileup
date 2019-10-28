@@ -1,6 +1,6 @@
 var React = require("react");
 
-class AllInvitesSent extends React.Component {
+class AllInvitesReceived extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
@@ -26,13 +26,22 @@ class AllInvitesSent extends React.Component {
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Email: {email}</h6>
                         <p class="card-text">Company Name: {company_name}</p>
+                        <form className="col align-self-center" method='POST' action='/acceptRequest'>
+                          <div className="form-group">
+                            <input type="number" className="form-control rounded" readonly="true" name="sender_id" value={id} required/>
+                          </div>
+                          <div className="form-group">
+                            <input type="number" className="form-control rounded" readonly="true" name="receiver_id" value={this.props.user_id} required/>
+                          </div>
+                          <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
+                        </form>
                       </div>
                     </div>
 
 
         });
     } else {
-        users = <p className="lead text-center mt-5">You have not sent any invites yet</p>
+        users = <p className="lead text-center mt-5">You have not received any invites yet</p>
     }
 
 
@@ -49,7 +58,7 @@ class AllInvitesSent extends React.Component {
 
             <Navbar/>
 
-            <h3 className="text-center mt-5">Invites Sent:</h3>
+            <h3 className="text-center mt-5">Invites Received:</h3>
                 <div className=" row justify-content-center mb-5">
                     {users}
                 </div>
@@ -64,4 +73,4 @@ class AllInvitesSent extends React.Component {
   }
 }
 
-module.exports = AllInvitesSent;
+module.exports = AllInvitesReceived;
