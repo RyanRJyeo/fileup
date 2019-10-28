@@ -13,13 +13,13 @@ class GroupPage extends React.Component {
             let name = x.name;
             let age = x.age;
             let contact = x.contact
-            console.log(this.props.results)
+
             return  <div class="card mr-3 mt-5">
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Age: {age}</h6>
                         <p class="card-text">Contact: {contact}</p>
-                        <a href={"/case/" + id} class="card-link">Get this file</a>
+                        <a href={"/case/" + id} class="card-link files">Get this file</a>
                       </div>
                     </div>
 

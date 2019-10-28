@@ -51,11 +51,30 @@ WHERE groups.id = 1;
 
 
 -- get all users who I've sent invites
-WITH invites_sent AS (SELECT * FROM invites WHERE sender = ($1)) SELECT * FROM users WHERE
-
-
-
 SELECT sender, receiver, users.id AS user_id, name, email, company_name, password, image
 FROM invites LEFT JOIN users
 ON (receiver = users.id)
 WHERE sender = ($1)
+
+
+
+-- Delete users from invite table and push them to friends table
+WITH pushing_to_friends AS (DELETE FROM invites WHERE sender = 1 AND receiver = 2 RETURNING *) INSERT INTO friends (first_user, second_user) VALUES (1, 2)
+
+
+-- get all friends
+SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user
+FROM users RIGHT JOIN friends
+ON (friends.first_user = 1 OR friends.second_user = 1)
+WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != 1
+ORDER BY users.id;
+
+
+
+
+
+SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user
+FROM users RIGHT JOIN friends
+ON (friends.first_user = 2 OR friends.second_user = 2)
+WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != 2
+ORDER BY users.id;

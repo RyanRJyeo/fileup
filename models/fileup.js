@@ -745,11 +745,11 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  let getSearchUsers = (name, callback) => {
+  let getSearchUsers = (name, user_id, callback) => {
 
-    let inputValues = [name + "%"];
+    let inputValues = [name + "%", user_id];
 
-    let query = "SELECT * FROM users WHERE name LIKE ($1)";
+    let query = "SELECT * FROM users WHERE name LIKE ($1) OR email LIKE ($1) OR company_name LIKE ($1) AND id != ($2)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -782,6 +782,36 @@ module.exports = (dbPoolInstance) => {
 
 
     dbPoolInstance.query(query, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getAllFriends = (user_id, callback) => {
+
+    let inputValues = [user_id]
+
+    let query = "SELECT * FROM friends WHERE first_user = ($1) OR second_user = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
 
         // invoke callback function with results after query has executed
@@ -864,6 +894,97 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getRequestAccepted = (sender_id, receiver_id, callback) => {
+
+    inputValues=[sender_id, receiver_id];
+
+    let query = "WITH pushing_to_friends AS (DELETE FROM invites WHERE sender = ($1) AND receiver = ($2) RETURNING *) INSERT INTO friends (first_user, second_user) VALUES ($1, $2)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+  let getAllReceivedInvites = (user_id, callback) => {
+
+    inputValues=[user_id];
+
+    let query = "SELECT sender, receiver, users.id AS user_id, name, email, company_name, password, image FROM invites LEFT JOIN users ON (sender = users.id) WHERE receiver = ($1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+  let getAllConnections = (user_id, callback) => {
+
+    inputValues=[user_id];
+
+    let query = "SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user FROM users RIGHT JOIN friends ON (friends.first_user = ($1) OR friends.second_user = ($1)) WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != ($1) ORDER BY users.id;";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
   return {
     getRegister,
     getLogin,
@@ -891,7 +1012,11 @@ module.exports = (dbPoolInstance) => {
     getSearchCase,
     getSearchUsers,
     getAllInvites,
+    getAllFriends,
     getInvitesSent,
     getAllSentInvites,
+    getRequestAccepted,
+    getAllReceivedInvites,
+    getAllConnections,
   };
 };

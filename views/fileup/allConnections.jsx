@@ -1,6 +1,6 @@
 var React = require("react");
 
-class AllInvitesSent extends React.Component {
+class AllConnections extends React.Component {
   render() {
 
     let Navbar = require('./navbar.jsx');
@@ -12,15 +12,15 @@ class AllInvitesSent extends React.Component {
             let id = x.user_id;
             let name = x.name;
             let email = x.email;
+            let image = x.image;
             let company_name;
             if (x.company_name){
                 company_name = x.company_name
             } else {
                 company_name = "Nil"
             }
-            let image = x.image
 
-            return   <div class="card mr-3 mt-5">
+            return  <div class="card mr-3 mt-5">
                       <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>
@@ -32,8 +32,9 @@ class AllInvitesSent extends React.Component {
 
         });
     } else {
-        users = <p className="lead text-center mt-5">You have not sent any invites yet</p>
+        users = <p className="lead text-center mt-5">You have no connections yet, let's start sending some invites!</p>
     }
+
 
 
 
@@ -49,7 +50,7 @@ class AllInvitesSent extends React.Component {
 
             <Navbar/>
 
-            <h3 className="text-center mt-5">Invites Sent:</h3>
+            <h3 className="text-center mt-5">All Connections:</h3>
                 <div className=" row justify-content-center mb-5">
                     {users}
                 </div>
@@ -64,4 +65,4 @@ class AllInvitesSent extends React.Component {
   }
 }
 
-module.exports = AllInvitesSent;
+module.exports = AllConnections;
