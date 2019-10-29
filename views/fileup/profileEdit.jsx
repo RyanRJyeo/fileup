@@ -21,7 +21,6 @@ class ProfileEdit extends React.Component {
         <head>
             <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-            <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
             <link rel="stylesheet" type="text/css" href="/style.css"/>
         </head>
@@ -33,8 +32,8 @@ class ProfileEdit extends React.Component {
 
             <div className="container mt-5">
                 <h1 className="text-center mt-5">Edit Your Profile</h1>
-                <a className="row justify-content-center">
-                    <img data-toggle="modal" data-target="#profilePic" className="img-thumbnail editProfilePic" src={this.props.results[0].image}/>
+                <a className="row justify-content-center editProfilePic">
+                    <img data-toggle="modal" data-target="#profilePic" className="btn img-thumbnail" src={this.props.results[0].image}/>
                 </a>
 
                 <form className="col align-self-center" method='POST' action='/profileEdit'>
