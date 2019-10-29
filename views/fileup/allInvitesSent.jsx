@@ -20,7 +20,7 @@ class AllInvitesSent extends React.Component {
             }
             let image = x.image
 
-            return   <div class="card mr-3 mt-5">
+            return   <div class="card text-white bg-dark mr-3 mt-5">
                       <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>

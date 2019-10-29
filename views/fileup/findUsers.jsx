@@ -28,7 +28,7 @@ class FindUsers extends React.Component {
                 let friendList = new Set(this.props.friends.map(x=>x.first_user));
                     if (friendList.has(id)){
                         button = <form className="col align-self-center" method='GET' action='/connections'>
-                                  <button type="submit" className="badge badge-pill badge-info text-white">This user is in your connections</button>
+                                  <button type="submit" className="badge badge-pill badge-warning">This user is in your connections</button>
                                 </form>
                     } else if (this.props.invites){
 
@@ -43,11 +43,11 @@ class FindUsers extends React.Component {
                                           <div className="form-group">
                                             <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                                           </div>
-                                          <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
+                                          <button type="submit" className="badge badge-pill badge-warning">Accept Request From This User</button>
                                         </form>
 
                             } else if (receiverList.has(id)){
-                                button = <p className="badge badge-pill badge-info text-white">You've already sent a request to this user</p>
+                                button = <p className="badge badge-pill badge-warning">You've already sent a request to this user</p>
 
                             } else {
                                 button =<form className="col align-self-center" method='POST' action='/sendInvite'>
@@ -57,7 +57,7 @@ class FindUsers extends React.Component {
                                           <div className="form-group">
                                             <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                                           </div>
-                                          <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                          <button type="submit" className="badge badge-pill badge-warning">Send Invite To This User</button>
                                         </form>
 
                             };
@@ -70,7 +70,7 @@ class FindUsers extends React.Component {
                                       <div className="form-group">
                                         <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                                       </div>
-                                      <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                      <button type="submit" className="badge badge-pill badge-warning">Send Invite To This User</button>
                                     </form>
                     };
             } else if (this.props.invites){
@@ -86,11 +86,11 @@ class FindUsers extends React.Component {
                                   <div className="form-group">
                                     <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                                   </div>
-                                  <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
+                                  <button type="submit" className="badge badge-pill badge-warning">Accept Request From This User</button>
                                 </form>
 
                     } else if (receiverList.has(id)){
-                        button = <p className="badge badge-pill badge-info text-white">You've already sent a request to this user</p>
+                        button = <p className="badge badge-pill badge-warning">You've already sent a request to this user</p>
 
                     } else {
                         button =<form className="col align-self-center" method='POST' action='/sendInvite'>
@@ -100,7 +100,7 @@ class FindUsers extends React.Component {
                                   <div className="form-group">
                                     <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                                   </div>
-                                  <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                                  <button type="submit" className="badge badge-pill badge-warning">Send Invite To This User</button>
                                 </form>
 
                     };
@@ -113,7 +113,7 @@ class FindUsers extends React.Component {
                               <div className="form-group">
                                 <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={id} required/>
                               </div>
-                              <button type="submit" className="badge badge-pill badge-info text-white">Send Invite To This User</button>
+                              <button type="submit" className="badge badge-pill badge-warning">Send Invite To This User</button>
                             </form>
             };
 
@@ -124,7 +124,7 @@ class FindUsers extends React.Component {
 
 
 
-            return  <div class="card mr-3 mt-5">
+            return  <div class="card text-white bg-dark mr-3 mt-5">
                       <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>

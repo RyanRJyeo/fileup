@@ -28,21 +28,22 @@ class Login extends React.Component {
 
             {alertUser}
 
-            <h1 className="display-4 text-center mt-5">Welcome to FileUp</h1>
+            <h3 className="text-center mt-5">Welcome to</h3>
+            <h1 className="display-4 text-center">File<span className="yellow">Upp</span></h1>
 
             <div className="mt-5 login-form">
                 <form  method='POST' action='/login'>
-                  <h3 className="mb-4 text-center text-white">Login</h3>
+                  <h3 className="mb-4 text-center">Login</h3>
                   <div className="form-group">
                     <input type="email" className="form-control rounded" name="email" placeholder="Email" required/>
                   </div>
                   <div className="form-group">
                     <input type="password" className="form-control rounded" name="password" placeholder="Password" required/>
                   </div>
-                  <button type="submit" className="btn btn-info mb-3">Login</button>
+                  <button type="submit" className="btn btn-warning mb-3">Login</button>
                 </form>
                 <form  method='GET' action='/register'>
-                    <button type="submit" className="btn btn-info">New to us? Register here</button>
+                    <button type="submit" className="btn btn-warning">New to us? Register here</button>
                 </form>
             </div>
 

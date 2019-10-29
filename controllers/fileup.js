@@ -1,4 +1,5 @@
 const sha256 = require('js-sha256');
+var cloudinary = require('cloudinary');
 //          Config
 //================================
 
@@ -76,6 +77,7 @@ module.exports = (db) => {
 
   };
 //============================================================
+
 
 
 
@@ -195,6 +197,24 @@ let changePasswordAlert;
   };
 //============================================================
 
+
+
+//============================================================
+  let changeProfilePicCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+
+    cloudinary.uploader.upload(request.file.path, function(image) {
+        console.log(image);
+        db.fileup.getPPChanged(image.url, user_id, (err, results)=>{
+
+            response.redirect('/profileEdit');
+
+        });
+      });
+
+  };
+//============================================================
 
 
 
@@ -829,6 +849,7 @@ let shareMessage;
     home: homeCC,
     profileEdit: profileEditCC,
     profileEditing: profileEditingCC,
+    changeProfilePic: changeProfilePicCC,
     changePassword: changePasswordCC,
     caseCreate: caseCreateCC,
     deleteCase: deleteCaseCC,

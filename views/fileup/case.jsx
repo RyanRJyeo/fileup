@@ -21,13 +21,13 @@ class Case extends React.Component {
                             </tbody>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Edit Preferences</a>
+                                <a class="btn btn-warning btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Edit Preferences</a>
                             </div>
     } else {
         preferenceContent = <p className="text-center mt-5">Preferences have not been set yet</p>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Add Preferences</a>
+                                <a class="btn btn-warning btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Add Preferences</a>
                             </div>
     }
 
@@ -65,7 +65,7 @@ class Case extends React.Component {
                             <hr className="my-4"/>
                             <p className="comments">{content}</p>
                                 <div className="row">
-                                    <a className="ml-4 btn btn-outline-info btn-sm mt-3" href={"/caseCommentsEdit/" + comment_id} ><i class='bx bx-edit-alt' ></i></a>
+                                    <a className="ml-4 btn btn-outline-warning btn-sm mt-3" href={"/caseCommentsEdit/" + comment_id} ><i class='bx bx-edit-alt' ></i></a>
                                     <a class="ml-4 btn btn-outline-danger btn-sm mt-3" data-toggle="collapse" href={"#multiCollapseExample" + comment_id} role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class='bx bxs-eraser' ></i></a>
                                 </div>
 
@@ -111,7 +111,7 @@ class Case extends React.Component {
 
             <main className="container">
                 <div className="editProfile container text-right">
-                    <a className="btn btn-sm btn-info mt-3 mr-4" href={"/caseEdit/" + this.props.cases[0].case_id}><i class='bx bx-edit-alt' ></i></a>
+                    <a className="btn btn-sm btn-warning mt-3 mr-4" href={"/caseEdit/" + this.props.cases[0].case_id}><i class='bx bx-edit-alt' ></i></a>
                     <button class="btn btn-sm btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class='bx bxs-eraser' ></i>
                     </button>
@@ -165,7 +165,7 @@ class Case extends React.Component {
                             </div>
                             <textarea type="text" rows="10" className="form-control rounded" name="content" placeholder="Comment Here" required></textarea>
                         </div>
-                        <button type="submit" className="btn btn-outline-info btn-sm mb-5">Comment</button>
+                        <button type="submit" className="btn btn-warning btn-sm mb-5">Comment</button>
                     </form>
                 </div>
 

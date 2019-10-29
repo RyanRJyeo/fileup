@@ -14,7 +14,7 @@ class FindCase extends React.Component {
             let age = x.age;
             let contact = x.contact
 
-            return  <div class="card mr-3 mt-5">
+            return  <div class="card text-white bg-dark mr-3 mt-5">
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Age: {age}</h6>

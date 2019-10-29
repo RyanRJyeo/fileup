@@ -1,5 +1,10 @@
 module.exports = (app, allModels) => {
 
+    var multer = require('multer');
+    var upload = multer({ dest: './uploads/' });
+    var cloudinary = require('cloudinary');
+
+
 
   /*
    *  =========================================
@@ -25,6 +30,7 @@ module.exports = (app, allModels) => {
 
   app.get('/profileEdit', controllerCallbacks.profileEdit);
   app.post('/profileEdit', controllerCallbacks.profileEditing);
+  app.post('/changeProfilePic', upload.single('myFile'), controllerCallbacks.changeProfilePic);
   app.post('/changePassword', controllerCallbacks.changePassword);
 
   app.get('/caseCreate', controllerCallbacks.caseCreate);

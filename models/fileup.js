@@ -150,6 +150,36 @@ module.exports = (dbPoolInstance) => {
 
 
 
+
+  let getPPChanged = (image, user_id, callback) => {
+
+    let inputValues = [image, user_id];
+
+    let query = 'UPDATE users SET image = ($1) WHERE id = ($2)';
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
   let getPasswordChanged = (user_id, hashedpassword, callback) => {
 
     let inputValues = [user_id, hashedpassword];
@@ -867,6 +897,7 @@ module.exports = (dbPoolInstance) => {
     getUser,
     getCases,
     getProfileEdited,
+    getPPChanged,
     getPasswordChanged,
     getCaseAdded,
     getOneCase,

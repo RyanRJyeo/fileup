@@ -29,7 +29,7 @@ class CaseCreate extends React.Component {
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="contact" placeholder="Contact Number" maxlength="20" required/>
                   </div>
-                  <button type="submit" className="btn btn-info">Create This File</button>
+                  <button type="submit" className="btn btn-warning">Create This File</button>
                 </form>
             </div>
 

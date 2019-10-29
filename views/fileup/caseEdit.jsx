@@ -35,7 +35,7 @@ class CaseEdit extends React.Component {
                         <p>Contact Number:</p>
                         <input type="text" className="form-control rounded" name="contact" placeholder={this.props.results[0].contact} required/>
                     </div>
-                    <button type="submit" className="btn btn-info">Save</button>
+                    <button type="submit" className="btn btn-warning">Save</button>
                 </form>
             </div>
 

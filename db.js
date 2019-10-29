@@ -48,6 +48,17 @@ pool.on('error', function (err) {
 });
 
 
+var cloudinary = require('cloudinary');
+
+var configForCloudinary;
+if( process.env.CLOUDINARY_URL ){   //FOR HEROKU
+  configForCloudinary = process.env.CLOUDINARY_URL;
+
+}else{ // FOR LOCAL
+  configForCloudinary = require("./config.json");
+}
+cloudinary.config(configForCloudinary);
+
 
 /*
  * ===================================================

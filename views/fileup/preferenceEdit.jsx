@@ -62,7 +62,7 @@ class PreferenceEdit extends React.Component {
                     <div className="form-group">
                         <textarea type="text" rows="6" className="form-control rounded" name="dislikes" placeholder="dislikes" required></textarea>
                     </div>
-                    <button type="submit" className="btn btn-info mb-5">Save</button>
+                    <button type="submit" className="btn btn-warning mb-5">Save</button>
                 </form>
             </div>
 

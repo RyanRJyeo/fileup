@@ -8,7 +8,7 @@ class ProfileEdit extends React.Component {
     let alertUser;
 
     if (this.props.alert){
-        alertUser =     <div class="alert alert-info text-center" role="alert">
+        alertUser =     <div class="alert alert-warning text-center" role="alert">
                           {this.props.alert}
                         </div>
     } else {
@@ -52,10 +52,10 @@ class ProfileEdit extends React.Component {
                     <p>Company Name:</p>
                     <input type="text" className="form-control rounded" name="company_name" placeholder={this.props.results[0].company_name}/>
                   </div>
-                  <button type="submit" className="btn btn-info ">Save Changes</button>
+                  <button type="submit" className="btn btn-warning ">Save Changes</button>
                   <br/>
                   <br/>
-                  <button type="button" class="btn btn-outline-info mb-5" data-toggle="modal" data-target="#exampleModalLong">Change Password?</button>
+                  <button type="button" class="btn btn-outline-warning mb-5" data-toggle="modal" data-target="#exampleModalLong">Change Password?</button>
                 </form>
 
                 <div class="modal fade" id="profilePic" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,12 +68,12 @@ class ProfileEdit extends React.Component {
                         </button>
                       </div>
                       <div class="modal-body">
-                        <form enctype="multipart/form-data" action="/" method="POST">
+                        <form enctype="multipart/form-data" action="/changeProfilePic" method="POST">
                           <div class="form-group">
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1" required/>
+                            <input type="file" name="myFile" class="form-control-file" id="exampleFormControlFile1" required/>
                           </div>
                               <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                              <button type="submit" class="btn btn-info"><i class='bx bx-save' ></i></button>
+                              <button type="submit" class="btn btn-warning"><i class='bx bx-save' ></i></button>
                         </form>
                       </div>
                     </div>
@@ -99,7 +99,7 @@ class ProfileEdit extends React.Component {
                             <input type="password" className="form-control rounded d-none" id="confirm_password" name="confirm_password" placeholder="Confirm New Password" required/>
                           </div>
                           <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                          <button type="submit" className="btn btn-info"><i class='bx bx-save' ></i></button>
+                          <button type="submit" className="btn btn-warning"><i class='bx bx-save' ></i></button>
                         </form>
                       </div>
                     </div>

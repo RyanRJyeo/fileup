@@ -47,28 +47,28 @@ class Home extends React.Component {
 
           {alertUser}
           <div className="editProfile">
-                <a className="btn btn-info btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
+                <a className="btn btn-warning btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
           </div>
           <div className="profile">
                 <img className="img-thumbnail profilePic mb-5"src={this.props.user[0].image}/>
                 <div className="details">
                     <section className="text-center">
                         <p><u>Name:</u></p>
-                        <p className="lead info">{this.props.user[0].name}</p>
+                        <p className="lead warning">{this.props.user[0].name}</p>
                     </section>
                     <section className="text-center mt-5">
                         <p><u>Email:</u></p>
-                        <p className="lead info">{this.props.user[0].email}</p>
+                        <p className="lead warning">{this.props.user[0].email}</p>
                     </section>
                     <section className="text-center mt-5">
                         <p><u>Company Name:</u></p>
-                        <p className="lead info">{this.props.user[0].company_name}</p>
+                        <p className="lead warning">{this.props.user[0].company_name}</p>
                     </section>
                 </div>
           </div>
 
           <div className="cases container mb-5">
-                <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-info btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
+                <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-warning btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
                 <div>
                     {cases}
                 </div>

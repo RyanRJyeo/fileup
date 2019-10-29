@@ -33,18 +33,18 @@ class AllConnections extends React.Component {
 
 
 
-            return  <div class="card mr-3 mt-5">
-                      <img class="card-img-top img-thumbnail" src={image} alt="Card image cap"/>
+            return  <div class="card text-white bg-dark mr-3 mt-5">
+                      <img class="card-img-top" src={image} alt="Card image cap"/>
                       <div class="card-body">
                         <h5 class="card-title">{name}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Email: {email}</h6>
                         <p class="card-text">Company Name: {company_name}</p>
-                        <button type="button" class="btn btn-outline-info mb-5" data-toggle="modal" data-target={"#exampleModalLong" + id}>Share File <i class='bx bx-share-alt'></i></button>
+                        <button type="button" class="btn btn-outline-warning mb-5" data-toggle="modal" data-target={"#exampleModalLong" + id}>Share File <i class='bx bx-share-alt'></i></button>
                         <div class="modal fade" id={"exampleModalLong" + id} tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Share Files</h5>
+                                <h5 class="modal-title text-dark" id="exampleModalLongTitle">Share Files</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -60,7 +60,7 @@ class AllConnections extends React.Component {
                                     </select>
                                   </div>
                                   <button type="button" class="btn btn-secondary mr-4" data-dismiss="modal"><i class='bx bx-x' ></i></button>
-                                  <button type="submit" className="btn btn-info"><i class='bx bx-share-alt'></i></button>
+                                  <button type="submit" className="btn btn-warning"><i class='bx bx-share-alt'></i></button>
                                 </form>
                               </div>
                             </div>

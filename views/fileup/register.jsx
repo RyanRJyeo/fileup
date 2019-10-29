@@ -29,10 +29,12 @@ class Register extends React.Component {
         <body>
 
             {alertUser}
-            <h1 className="display-4 text-center mt-5">Welcome to FileUp</h1>
+            <h3 className="text-center mt-5">Welcome to</h3>
+            <h1 className="display-4 text-center">File<span className="yellow">Upp</span></h1>
+
             <div className="mt-5 login-form">
                 <form method='POST' action='/register'>
-                  <h3 className="mb-4 text-center text-white">Register</h3>
+                  <h3 className="mb-4 text-center">Register</h3>
                   <div className="form-group">
                     <input type="text" className="form-control rounded" name="name" placeholder="Name" required/>
                   </div>
@@ -48,10 +50,10 @@ class Register extends React.Component {
                   <div className="form-group">
                     <input type="text" className="form-control d-none" name="image" value="https://magazine.fbk.eu/wp-content/uploads/2017/09/icona.jpg" required/>
                   </div>
-                  <button type="submit" className="btn btn-info mb-3">Register</button>
+                  <button type="submit" className="btn btn-warning mb-3">Register</button>
                 </form>
                 <form method='GET' action='/login'>
-                    <button type="submit" className="btn btn-info">Already a user? Login here</button>
+                    <button type="submit" className="btn btn-warning">Already a user? Login here</button>
                 </form>
             </div>
 

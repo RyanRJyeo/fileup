@@ -41,7 +41,7 @@ class CommentEdit extends React.Component {
                   <div className="form-group">
                     <textarea type="text" rows="9" className="form-control rounded" name="new_comment" placeholder="Edit comment here" required></textarea>
                   </div>
-                  <button type="submit" className="btn btn-info mb-5">Edit Comment</button>
+                  <button type="submit" className="btn btn-warning mb-5">Edit Comment</button>
                 </form>
             </div>
 

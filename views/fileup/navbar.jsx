@@ -12,7 +12,7 @@ class Navbar extends React.Component {
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
                   <span>
-                    <a class="navbar-brand" href="/">FileUp</a>
+                    <a class="navbar-brand" href="/">File<span className="yellow">Upp</span></a>
                   </span>
 
                   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@ class Navbar extends React.Component {
                       <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class='bx bx-search'></i></button>
                     </form>
                     <div class="navbar-nav">
-                      <a class="btn btn-outline-info" href="/logout">Log Out</a>
+                      <a class="btn btn-outline-warning" href="/logout">Log Out</a>
                     </div>
                   </div>
 
