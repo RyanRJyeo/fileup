@@ -26,28 +26,12 @@ ON (users.id = cases.users_id)
 WHERE users.id = 1;
 
 
--- Getting group info from case info for Home Page
-SELECT *
-FROM cases INNER JOIN groups
-ON (cases.id = groups.case_id)
-WHERE users_id = 1;
-
-
-
 -- Update case info
 UPDATE cases SET
 name = 'Johnny',
 age = 19,
 contact = 12039102390
 WHERE id = 3 AND users_id = 1
-
-
-
--- get group page
-SELECT groups.id AS group_id, groups.users_id, group_name, cases.id AS cases_id, name, age, contact
-FROM groups LEFT JOIN cases
-ON (groups.id = group_id)
-WHERE groups.id = 1;
 
 
 -- get all users who I've sent invites
@@ -95,10 +79,21 @@ WHERE user_cases.users_id = 1 ORDER BY case_id
 SELECT *
 FROM cases INNER JOIN user_cases
 ON (cases.id = user_cases.case_id)
-WHERE name LIKE ($2) AND user_cases.users_id = ($1)
-
-
-SELECT *
-FROM cases INNER JOIN user_cases
-ON (cases.id = user_cases.case_id)
 WHERE name LIKE ('C%') AND user_cases.users_id = 1
+
+-- get comment edit page
+SELECT comments.id, comments.case_id, user_cases.users_id AS user_id, user_name, content, created_at, name
+FROM comments INNER JOIN cases
+ON (comments.case_id = cases.id)
+INNER JOIN user_cases
+ON (comments.case_id = user_cases.case_id)
+WHERE comments.id = ($1)
+
+
+
+SELECT comments.id, comments.case_id, user_cases.users_id AS user_id, user_name, created_at, name
+FROM comments INNER JOIN cases
+ON (comments.case_id = cases.id)
+INNER JOIN user_cases
+ON (comments.case_id = user_cases.case_id)
+WHERE comments.id = ($1)

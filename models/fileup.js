@@ -470,7 +470,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [comment_id];
 
-    let query = "SELECT comments.id, case_id, user_name, content, created_at, name FROM comments INNER JOIN cases ON (comments.case_id = cases.id) WHERE comments.id = ($1)";
+    let query = "SELECT comments.id, comments.case_id, user_cases.users_id AS user_id, user_name, content, created_at, name FROM comments INNER JOIN cases ON (comments.case_id = cases.id) INNER JOIN user_cases ON (comments.case_id = user_cases.case_id) WHERE comments.id = ($1)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {

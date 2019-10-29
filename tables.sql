@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS preferences(
 CREATE TABLE IF NOT EXISTS comments(
 	id SERIAL PRIMARY KEY,
 	case_id INTEGER,
-	users_id INTEGER,
 	user_name TEXT,
 	content TEXT,
 	created_at TIMESTAMPTZ DEFAULT now(),

@@ -209,7 +209,7 @@ let changePasswordAlert;
     let user_id = request.cookies['user_id'];
 
     cloudinary.uploader.upload(request.file.path, function(image) {
-        console.log(image);
+
         db.fileup.getPPChanged(image.url, user_id, (err, results)=>{
 
             response.redirect('/profileEdit');
@@ -323,22 +323,26 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, cases) => {
-                let verifyUser = new Set(cases.map(x=>x.users_id))
-                let verifyUser2 = parseInt(user_id);
-                if (verifyUser.has(verifyUser2)){
-                    db.fileup.getPreference(cases[0].case_id, (error, preference)=>{
-                        db.fileup.getComments(cases[0].case_id, (err, comments)=>{
+                if (cases){
+                    let verifyUser = new Set(cases.map(x=>x.users_id))
+                    let verifyUser2 = parseInt(user_id);
+                    if (verifyUser.has(verifyUser2)){
+                        db.fileup.getPreference(cases[0].case_id, (error, preference)=>{
+                            db.fileup.getComments(cases[0].case_id, (err, comments)=>{
 
-                            let data= {
-                                user_name: user_name,
-                                cases: cases,
-                                preference: preference,
-                                comments: comments
-                            };
+                                let data= {
+                                    user_name: user_name,
+                                    cases: cases,
+                                    preference: preference,
+                                    comments: comments
+                                };
 
-                            response.render('fileup/case', data);
+                                response.render('fileup/case', data);
+                            });
                         });
-                    });
+                    } else {
+                        response.redirect('/');
+                    };
                 } else {
                     response.redirect('/');
                 };
@@ -361,13 +365,16 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
+                if (results){
+                    let verifyUser = new Set(results.map(x=>x.users_id))
+                    let verifyUser2 = parseInt(user_id);
+                    if (verifyUser.has(verifyUser2)){
 
-                let verifyUser = new Set(results.map(x=>x.users_id))
-                let verifyUser2 = parseInt(user_id);
-                if (verifyUser.has(verifyUser2)){
+                            response.render('fileup/caseEdit', {results});
 
-                        response.render('fileup/caseEdit', {results});
-
+                    } else {
+                        response.redirect('/');
+                    };
                 } else {
                     response.redirect('/');
                 };
@@ -415,19 +422,22 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
+                if (results){
+                    let verifyUser = new Set(results.map(x=>x.users_id))
+                    let verifyUser2 = parseInt(user_id);
+                    if (verifyUser.has(verifyUser2)){
+                        db.fileup.getPreference(requestCaseID, (err, preferences)=>{
 
-                let verifyUser = new Set(results.map(x=>x.users_id))
-                let verifyUser2 = parseInt(user_id);
-                if (verifyUser.has(verifyUser2)){
-                    db.fileup.getPreference(requestCaseID, (err, preferences)=>{
+                            let data = {
+                                preferences: preferences,
+                                results: results
+                            };
 
-                        let data = {
-                            preferences: preferences,
-                            results: results
-                        };
-
-                        response.render('fileup/preferenceEdit', data);
-                    });
+                            response.render('fileup/preferenceEdit', data);
+                        });
+                    } else {
+                        response.redirect('/');
+                    };
                 } else {
                     response.redirect('/');
                 };
@@ -502,17 +512,18 @@ let requestCaseID;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getOneCase(requestCaseID, (error, cases) => {
+        let comment_id = requestCommentID;
+        db.fileup.getCommentEditPage(comment_id, (error, results) => {
+            if (results){
+                let verifyUser = new Set(results.map(x=>x.user_id))
+                let verifyUser2 = parseInt(user_id);
+                if (verifyUser.has(verifyUser2)){
 
-            let verifyUser = new Set(cases.map(x=>x.users_id))
-            let verifyUser2 = parseInt(user_id);
-            if (verifyUser.has(verifyUser2)){
-                let comment_id = requestCommentID;
-                db.fileup.getCommentEditPage(comment_id, (error, results) => {
+                response.render('fileup/commentEdit', {results});
 
-                    response.render('fileup/commentEdit', {results});
-
-                });
+                } else {
+                    response.redirect('/');
+                };
             } else {
                 response.redirect('/');
             };
@@ -532,7 +543,7 @@ let requestCaseID;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    requestCaseID = request.params.id
+
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let comment_id = request.body.comment_id;
@@ -561,7 +572,7 @@ let requestCaseID;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    requestCaseID = request.params.id
+
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
@@ -786,7 +797,7 @@ let shareMessage;
                         cases: cases,
                         shareMessage: shareMessage
                     };
-                    console.log(data)
+
                     setTimeout(function(){shareMessage = null}, 200);
                     response.render('fileup/allConnections', data)
                 });

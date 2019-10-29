@@ -50,7 +50,7 @@ class Navbar extends React.Component {
 
                 </nav>
             </header>
-
+            <script src="script.js"></script>
         </html>
     );
   }
