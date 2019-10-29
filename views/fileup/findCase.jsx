@@ -9,7 +9,7 @@ class FindCase extends React.Component {
 
     if (this.props.results){
         cases = this.props.results.map(x=>{
-            let id = x.id;
+            let id = x.case_id;
             let name = x.name;
             let age = x.age;
             let contact = x.contact

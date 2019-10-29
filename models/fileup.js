@@ -562,7 +562,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [user_id, case_name + "%"];
 
-    let query = "SELECT * FROM cases INNER JOIN user_cases ON (cases.id = user_cases.case_id) WHERE name LIKE ($2) AND user_cases.users_id = ($1)";
+    let query = "SELECT cases.id AS case_id, creator_id, name, age, contact, users_id, case_id FROM cases INNER JOIN user_cases ON (cases.id = user_cases.case_id) WHERE name LIKE ($2) AND user_cases.users_id = ($1)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
