@@ -28,10 +28,10 @@ class AllInvitesReceived extends React.Component {
                         <p class="card-text">Company Name: {company_name}</p>
                         <form className="col align-self-center" method='POST' action='/acceptRequest'>
                           <div className="form-group">
-                            <input type="number" className="form-control rounded" readonly="true" name="sender_id" value={id} required/>
+                            <input type="number" className="form-control rounded d-none" readonly="true" name="sender_id" value={id} required/>
                           </div>
                           <div className="form-group">
-                            <input type="number" className="form-control rounded" readonly="true" name="receiver_id" value={this.props.user_id} required/>
+                            <input type="number" className="form-control rounded d-none" readonly="true" name="receiver_id" value={this.props.user_id} required/>
                           </div>
                           <button type="submit" className="badge badge-pill badge-info text-white">Accept Request From This User</button>
                         </form>

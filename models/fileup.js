@@ -96,7 +96,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [user_id];
 
-    let query = "SELECT * FROM cases WHERE users_id = ($1) ORDER BY id";
+    let query = "SELECT users_id, case_id, name, age, contact FROM cases INNER JOIN user_cases ON (cases.id = user_cases.case_id) WHERE user_cases.users_id = ($1) ORDER BY case_id"
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -182,7 +182,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [user_id, name, age, contact];
 
-    let query = 'INSERT INTO cases (users_id, name, age, contact) VALUES ($1, $2, $3, $4) RETURNING *';
+    let query = "WITH adding_case AS (INSERT INTO cases (creator_id, name, age, contact) VALUES ($1, $2, $3, $4) RETURNING *) INSERT INTO user_cases (users_id, case_id) SELECT creator_id, id FROM adding_case RETURNING *"
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -211,7 +211,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [requestCaseID];
 
-    let query = 'SELECT * FROM cases WHERE id = ($1)';
+    let query = 'SELECT users_id, case_id, name, age, contact FROM cases INNER JOIN user_cases ON (cases.id = user_cases.case_id) WHERE user_cases.case_id = ($1)';
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -263,11 +263,11 @@ module.exports = (dbPoolInstance) => {
   };
 
 
-  let getCaseDeleted = (case_id, callback) => {
+  let getCaseDeleted = (user_id, case_id, callback) => {
 
-    let inputValues = [case_id];
+    let inputValues = [user_id, case_id];
 
-    let query = "DELETE FROM cases WHERE id = ($1)"
+    let query = "WITH delete_case AS (DELETE FROM cases WHERE id = ($2) RETURNING *) DELETE FROM user_cases WHERE users_id = ($1) AND case_id = ($2)"
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -294,11 +294,11 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  let getCaseEdited = (requestCaseID, requestUserID, requestName, requestAge, requestContact, callback) => {
+  let getCaseEdited = (requestCaseID, requestName, requestAge, requestContact, callback) => {
 
-    let inputValues = [requestCaseID, requestUserID, requestName, requestAge, requestContact];
+    let inputValues = [requestCaseID, requestName, requestAge, requestContact];
 
-    let query = "UPDATE cases SET name = ($3), age = ($4), contact = ($5) WHERE id = ($1) AND users_id = ($2)";
+    let query = "UPDATE cases SET name = ($2), age = ($3), contact = ($4) WHERE id = ($1) RETURNING *";
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
       if( error ){
@@ -440,7 +440,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [comment_id];
 
-    let query = "SELECT comments.id, case_id, user_name, content, created_at, name FROM comments INNER JOIN cases ON (comments.case_id = cases.id) WHERE case_id = ($1)";
+    let query = "SELECT comments.id, case_id, user_name, content, created_at, name FROM comments INNER JOIN cases ON (comments.case_id = cases.id) WHERE comments.id = ($1)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -532,7 +532,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [user_id, case_name + "%"];
 
-    let query = "SELECT * FROM cases WHERE name LIKE ($2) AND users_id = ($1)";
+    let query = "SELECT * FROM cases INNER JOIN user_cases ON (cases.id = user_cases.case_id) WHERE name LIKE ($2) AND user_cases.users_id = ($1)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -563,7 +563,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [name + "%", user_id];
 
-    let query = "SELECT * FROM users WHERE name LIKE ($1) OR email LIKE ($1) OR company_name LIKE ($1) AND id != ($2)";
+    let query = "SELECT * FROM users WHERE (name LIKE ($1) OR email LIKE ($1) OR company_name LIKE ($1)) AND id != ($2)";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -740,6 +740,36 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  let getRequestAcceptedAgain = (sender_id, receiver_id, callback) => {
+
+    inputValues=[sender_id, receiver_id];
+
+    let query = "INSERT INTO friends (first_user, second_user) VALUES ($2, $1)";
+
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
   let getAllReceivedInvites = (user_id, callback) => {
 
     inputValues=[user_id];
@@ -775,7 +805,37 @@ module.exports = (dbPoolInstance) => {
 
     inputValues=[user_id];
 
-    let query = "SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user FROM users RIGHT JOIN friends ON (friends.first_user = ($1) OR friends.second_user = ($1)) WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != ($1) ORDER BY users.id;";
+    let query = "SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user FROM users RIGHT JOIN friends ON (friends.first_user = ($1)) WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != ($1) ORDER BY users.id;"
+
+    dbPoolInstance.query(query, inputValues, (error, queryResult) => {
+      if( error ){
+
+        // invoke callback function with results after query has executed
+        callback(error, null);
+
+      }else{
+
+        // invoke callback function with results after query has executed
+
+        if( queryResult.rows.length > 0 ){
+          callback(null, queryResult.rows);
+
+        }else{
+          callback(null, null);
+
+        }
+      }
+    });
+  };
+
+
+
+
+  let getCaseShared = (users_id, case_id, callback) => {
+
+    inputValues=[users_id, case_id,];
+
+    let query = "INSERT INTO user_cases (users_id, case_id) VALUES ($1, $2) RETURNING *";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -826,7 +886,9 @@ module.exports = (dbPoolInstance) => {
     getInvitesSent,
     getAllSentInvites,
     getRequestAccepted,
+    getRequestAcceptedAgain,
     getAllReceivedInvites,
     getAllConnections,
+    getCaseShared,
   };
 };

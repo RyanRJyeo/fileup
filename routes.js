@@ -56,6 +56,7 @@ module.exports = (app, allModels) => {
   app.get('/invitesReceivedAjax', controllerCallbacks.invitesReceivedAjax);
 
   app.get('/connections', controllerCallbacks.connections);
+  app.post('/shareCase', controllerCallbacks.shareCase);
 
   app.get('/', controllerCallbacks.home);
 

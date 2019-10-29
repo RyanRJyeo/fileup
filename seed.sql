@@ -58,23 +58,47 @@ WHERE sender = ($1)
 
 
 
--- Delete users from invite table and push them to friends table
+-- Delete users from invite table and push them to friends table (will add again to make both side even)
 WITH pushing_to_friends AS (DELETE FROM invites WHERE sender = 1 AND receiver = 2 RETURNING *) INSERT INTO friends (first_user, second_user) VALUES (1, 2)
 
 
 -- get all friends
 SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user
 FROM users RIGHT JOIN friends
-ON (friends.first_user = 1 OR friends.second_user = 1)
+ON (friends.first_user = 1)
 WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != 1
 ORDER BY users.id;
 
 
 
+-- getting cases added
+WITH adding_case AS (
+	INSERT INTO cases (creator_id, name, age, contact)
+	VALUES (1, 'john', 12, 1213123)
+	RETURNING *
+)
+INSERT INTO user_cases (users_id, case_id)
+SELECT creator_id, id FROM adding_case
+RETURNING *
 
 
-SELECT users.id AS user_id, name, email, company_name, image, first_user, second_user
-FROM users RIGHT JOIN friends
-ON (friends.first_user = 2 OR friends.second_user = 2)
-WHERE (users.id = friends.first_user OR users.id = friends.second_user) AND users.id != 2
-ORDER BY users.id;
+
+-- for home page: get case where it is in user_cases and cases
+SELECT users_id, case_id, name, age, contact
+FROM cases INNER JOIN user_cases
+ON (cases.id = user_cases.case_id)
+WHERE user_cases.users_id = 1 ORDER BY case_id
+
+
+
+-- find case
+SELECT *
+FROM cases INNER JOIN user_cases
+ON (cases.id = user_cases.case_id)
+WHERE name LIKE ($2) AND user_cases.users_id = ($1)
+
+
+SELECT *
+FROM cases INNER JOIN user_cases
+ON (cases.id = user_cases.case_id)
+WHERE name LIKE ('C%') AND user_cases.users_id = 1

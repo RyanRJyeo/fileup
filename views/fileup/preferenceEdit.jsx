@@ -44,9 +44,9 @@ class PreferenceEdit extends React.Component {
 
             {word}
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/casePreference/" + this.props.results[0].id}>
+                <form className="col align-self-center" method='POST' action={"/casePreference/" + this.props.results[0].case_id}>
                     <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].id} readonly="true"  required/>
+                        <input type="text" className="form-control rounded d-none" name="case_id"value={this.props.results[0].case_id} readonly="true"  required/>
                     </div>
                     <div className="form-group">
                         <p><u>Likes:</u></p>

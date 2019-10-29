@@ -9,7 +9,7 @@ class Home extends React.Component {
 
     if (this.props.cases){
         cases = this.props.cases.map(x=>{
-            let id = x.id;
+            let id = x.case_id;
             let name = x.name
 
             return <a className="lead ml-3 d-inline-block d-none files" href={"case/" + id}>{name}</a>

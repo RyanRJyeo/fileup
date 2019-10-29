@@ -19,12 +19,9 @@ class CaseEdit extends React.Component {
 
             <h1 className="text-center mt-5">Edit: {this.props.results[0].name}</h1>
             <div className="container mt-5">
-                <form className="col align-self-center" method='POST' action={"/caseEdit/" + this.props.results[0].id}>
+                <form className="col align-self-center" method='POST' action={"/caseEdit/" + this.props.results[0].case_id}>
                     <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="id" value={this.props.results[0].id} readonly="true"  required/>
-                    </div>
-                    <div className="form-group">
-                        <input type="text" className="form-control rounded d-none" name="users_id" value={this.props.results[0].users_id} readonly="true"  required/>
+                        <input type="text" className="form-control rounded d-none" name="id" value={this.props.results[0].case_id} readonly="true"  required/>
                     </div>
                     <div className="form-group">
                         <p>Name:</p>

@@ -21,13 +21,13 @@ class Case extends React.Component {
                             </tbody>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].id}>Edit Preferences</a>
+                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Edit Preferences</a>
                             </div>
     } else {
         preferenceContent = <p className="text-center mt-5">Preferences have not been set yet</p>
 
         preferenceButton =  <div className="row justify-content-center">
-                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].id}>Add Preferences</a>
+                                <a class="btn btn-outline-info btn-sm mt-3" href={"/casePreference/" + this.props.cases[0].case_id}>Add Preferences</a>
                             </div>
     }
 
@@ -64,12 +64,7 @@ class Case extends React.Component {
                             <hr className="my-4"/>
                             <p className="comments">{content}</p>
                                 <div className="row">
-                                    <form className="ml-4 align-self-center" method='GET' action={"/caseCommentsEdit/" + case_id}>
-                                        <div className="form-group">
-                                            <input type="number" className="form-control rounded d-none" name="comment_id" value={comment_id} readonly="true" required/>
-                                        </div>
-                                        <button type="submit" className="btn btn-outline-info btn-sm"><i class='bx bx-edit-alt' ></i></button>
-                                    </form>
+                                    <a className="ml-4 btn btn-outline-info btn-sm mt-3" href={"/caseCommentsEdit/" + comment_id} ><i class='bx bx-edit-alt' ></i></a>
                                     <a class="ml-4 btn btn-outline-danger btn-sm mt-3" data-toggle="collapse" href={"#multiCollapseExample" + comment_id} role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><i class='bx bxs-eraser' ></i></a>
                                 </div>
 
@@ -115,7 +110,7 @@ class Case extends React.Component {
 
             <main className="container">
                 <div className="editProfile container text-right">
-                    <a className="btn btn-sm btn-info mt-3 mr-4" href={"/caseEdit/" + this.props.cases[0].id}><i class='bx bx-edit-alt' ></i></a>
+                    <a className="btn btn-sm btn-info mt-3 mr-4" href={"/caseEdit/" + this.props.cases[0].case_id}><i class='bx bx-edit-alt' ></i></a>
                     <button class="btn btn-sm btn-danger mt-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                         <i class='bx bxs-eraser' ></i>
                     </button>
@@ -128,18 +123,12 @@ class Case extends React.Component {
                             <p>It will be permanently removed from the database</p>
                             <form method='POST' action={"/case/" + this.props.cases[0].id + "/delete"}>
                                 <input type="text" className="form-control rounded d-none" name="case_name"value={this.props.cases[0].name} readonly="true" required/>
-                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].id} readonly="true" required/>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].case_id} readonly="true" required/>
                                 <button type="submit" className="btn btn-outline-danger btn-sm">Yes Delete Permanently</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
 
 
                 <h1 className="row justify-content-center">{this.props.cases[0].name}</h1>
@@ -165,10 +154,10 @@ class Case extends React.Component {
 
                     {comments}
 
-                    <form className="col align-self-center" method='POST' action={"/caseComments/" + this.props.cases[0].id}>
+                    <form className="col align-self-center" method='POST' action={"/caseComments/" + this.props.cases[0].case_id}>
                         <div className="form-group">
                             <div className="form-group">
-                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].id} readonly="true" required/>
+                                <input type="number" className="form-control rounded d-none" name="case_id"value={this.props.cases[0].case_id} readonly="true" required/>
                             </div>
                             <div className="form-group">
                                 <input type="text" className="form-control rounded d-none" name="name"value={this.props.user_name} readonly="true" required/>
@@ -179,10 +168,6 @@ class Case extends React.Component {
                     </form>
                 </div>
 
-
-                <form className="col text-right" method='GET' action="/connections/">
-                    <button type="submit" className="btn btn-outline-success btn-sm mb-5">Share <i class='bx bx-share-alt'></i></button>
-                </form>
 
 
             </main>

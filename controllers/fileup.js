@@ -237,6 +237,31 @@ let changePasswordAlert;
 //============================================================
 
 
+//============================================================
+  let addInCaseCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            let name = request.body.name;
+            let age = request.body.age;
+            let contact = request.body.contact;
+
+            db.fileup.getCaseAdded(user_id, name, age, contact, (err, results)=>{
+                if (results){
+                    response.redirect('/');
+                } else {
+                    response.render('fileup/errorCaseCreate');
+                };
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
 
 
 //============================================================
@@ -248,7 +273,7 @@ let changePasswordAlert;
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
             alertUser = "File " + request.body.case_name + " has been deleted"
-            db.fileup.getCaseDeleted(case_id, (err, results)=>{
+            db.fileup.getCaseDeleted(user_id, case_id, (err, results)=>{
 
                 response.redirect('/');
 
@@ -260,34 +285,7 @@ let changePasswordAlert;
 //============================================================
 
 
-
-
-//============================================================
-  let addInCaseCC = (request, response) => {
-
-    let user_id = request.cookies['user_id'];
-    let hashedValue = sha256( SALT + user_id );
-
-        if( request.cookies['hasLoggedIn'] === hashedValue){
-            let name = request.body.name;
-            let age = request.body.age;
-            let contact = request.body.contact;
-            db.fileup.getCaseAdded(user_id, name, age, contact, (err, results)=>{
-                if (results){
-                    response.redirect('/');
-                } else {
-                    data = {
-                        user_id: user_id
-                    }
-                    response.render('fileup/errorCaseCreate', data);
-                };
-            });
-        } else {
-            response.redirect('/login');
-        };
-  };
-//============================================================
-
+let requestCaseID;
 
 
 //============================================================
@@ -296,17 +294,16 @@ let changePasswordAlert;
     let user_id = request.cookies['user_id'];
     let user_name = request.cookies['user_name'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id;
+    requestCaseID = request.params.id;
+
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, cases) => {
-                console.log("cases is")
-                console.log(cases)
                 let verifyUser = parseInt(cases[0].users_id);
                 let verifyUser2 = parseInt(user_id);
                 if (verifyUser === verifyUser2){
-                    db.fileup.getPreference(cases[0].id, (error, preference)=>{
-                        db.fileup.getComments(cases[0].id, (err, comments)=>{
+                    db.fileup.getPreference(cases[0].case_id, (error, preference)=>{
+                        db.fileup.getComments(cases[0].case_id, (err, comments)=>{
 
                             let data= {
                                 user_name: user_name,
@@ -336,7 +333,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
@@ -366,17 +363,15 @@ let changePasswordAlert;
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getOneCase(request.body.id, (error, results) => {
-            let requestCaseID = request.body.id;
-            let requestUserID = request.body.users_id;
-            let requestName = request.body.name;
-            let requestAge = request.body.age;
-            let requestContact = request.body.contact;
-            db.fileup.getCaseEdited(requestCaseID, requestUserID, requestName, requestAge, requestContact, (error, results) => {
 
-                response.redirect('/case/'+requestCaseID);
+        let requestCaseID = request.body.id;
+        let requestName = request.body.name;
+        let requestAge = request.body.age;
+        let requestContact = request.body.contact;
+        db.fileup.getCaseEdited(requestCaseID, requestName, requestAge, requestContact, (error, results) => {
 
-            });
+            response.redirect('/case/'+requestCaseID);
+
         });
     } else {
         response.redirect('/login');
@@ -391,7 +386,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id;
+    requestCaseID = request.params.id;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
@@ -425,7 +420,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCaseID = request.params.id
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
@@ -452,7 +447,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
@@ -477,16 +472,16 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCommentID = request.params.id
 
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
-        db.fileup.getOneCase(requestCaseID, (error, results) => {
-            let verifyUser = parseInt(results[0].users_id);
+        db.fileup.getOneCase(requestCaseID, (error, cases) => {
+            let verifyUser = parseInt(cases[0].users_id);
             let verifyUser2 = parseInt(user_id);
             if (verifyUser === verifyUser2){
-                let case_id = requestCaseID;
-                db.fileup.getCommentEditPage(case_id, (error, results) => {
+                let comment_id = requestCommentID;
+                db.fileup.getCommentEditPage(comment_id, (error, results) => {
 
                     response.render('fileup/commentEdit', {results});
 
@@ -510,7 +505,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let comment_id = request.body.comment_id;
@@ -537,7 +532,7 @@ let changePasswordAlert;
 
     let user_id = request.cookies['user_id'];
     let hashedValue = sha256( SALT + user_id );
-    let requestCaseID = request.params.id
+    requestCaseID = request.params.id
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             let case_id = request.body.case_id;
@@ -689,9 +684,9 @@ let changePasswordAlert;
             let sender_id = request.body.sender_id;
             let receiver_id = request.body.receiver_id;
             db.fileup.getRequestAccepted(sender_id, receiver_id, (error, results) => {
-
-                response.redirect('/connections');
-
+                db.fileup.getRequestAcceptedAgain(sender_id, receiver_id, (error, res)=>{
+                    response.redirect('/connections');
+                });
             });
         } else {
             response.redirect('/login');
@@ -744,6 +739,9 @@ let changePasswordAlert;
 //============================================================
 
 
+let shareMessage;
+
+
 //============================================================
   let connectionsCC = (request, response) => {
 
@@ -752,7 +750,55 @@ let changePasswordAlert;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getAllConnections(user_id, (error, results) => {
-                response.render('fileup/allConnections', {results})
+                db.fileup.getCases(user_id, (err, cases)=>{
+
+                    let data = {
+                        results: results,
+                        cases: cases,
+                        shareMessage: shareMessage
+                    };
+
+                    setTimeout(function(){shareMessage = null}, 200);
+                    response.render('fileup/allConnections', data)
+                });
+            });
+        } else {
+            response.redirect('/login');
+        };
+  };
+//============================================================
+
+
+
+
+//============================================================
+  let shareCaseCC = (request, response) => {
+
+    let user_id = request.cookies['user_id'];
+    let hashedValue = sha256( SALT + user_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedValue){
+            let users_id = request.body.users_id;
+            let case_id = request.body.case_id;
+            db.fileup.getCaseShared(users_id, case_id, (error, results) => {
+                if (results){
+                    let case_name;
+                    let user_name;
+                    db.fileup.getOneCase(case_id, (err, cases)=>{
+                        case_name = cases[0].name
+                        db.fileup.getUser(users_id, (err, user)=>{
+                            user_name = user[0].name
+
+                                shareMessage = "File " + case_name + " has been shared with User " + user_name
+                                response.redirect('/connections');
+
+                        });
+                    })
+                } else {
+                    shareMessage = "File have already been shared with this user"
+                    response.redirect('/connections');
+                }
+
             });
         } else {
             response.redirect('/login');
@@ -800,6 +846,7 @@ let changePasswordAlert;
     invitesReceived: invitesReceivedCC,
     invitesReceivedAjax: invitesReceivedAjaxCC,
     connections: connectionsCC,
+    shareCase: shareCaseCC,
   };
 
 }

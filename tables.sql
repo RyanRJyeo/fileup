@@ -12,14 +12,15 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS user_cases(
 	id SERIAL PRIMARY KEY,
 	users_id INTEGER,
-	case_id INTEGER
+	case_id INTEGER,
+	UNIQUE (users_id, case_id)
 );
 
 
 
 CREATE TABLE IF NOT EXISTS cases(
 	id SERIAL PRIMARY KEY,
-	users_id INTEGER,
+	creator_id INTEGER,
 	name VARCHAR(20),
 	age INTEGER,
 	contact VARCHAR(20)
@@ -55,5 +56,6 @@ CREATE TABLE IF NOT EXISTS invites(
 CREATE TABLE IF NOT EXISTS friends(
 	id SERIAL PRIMARY KEY,
 	first_user INTEGER,
-	second_user INTEGER
+	second_user INTEGER,
+	UNIQUE (first_user, second_user)
 );

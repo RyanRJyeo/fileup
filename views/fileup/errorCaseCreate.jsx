@@ -24,9 +24,6 @@ class ErrorCaseCreate extends React.Component {
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action='/caseCreate'>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded d-none" readonly="true" name="users_id" value={this.props.id} required/>
-                  </div>
-                  <div className="form-group">
                     <input type="text" className="form-control rounded" name="name" placeholder="Name" maxlength="20" required/>
                   </div>
                   <div className="form-group">
