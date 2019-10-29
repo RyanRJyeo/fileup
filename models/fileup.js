@@ -378,7 +378,7 @@ module.exports = (dbPoolInstance) => {
 
     let inputValues = [requestCaseID];
 
-    let query = "SELECT * FROM comments WHERE case_id = ($1)";
+    let query = "SELECT * FROM comments WHERE case_id = ($1) ORDER BY id";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {
@@ -466,12 +466,12 @@ module.exports = (dbPoolInstance) => {
 
 
 
-  let getCommentEdited = (comment_id, new_comment, updated_at, callback) => {
+  let getCommentEdited = (comment_id, new_comment, updated_at, updated_by, callback) => {
 
-    let inputValues = [comment_id, new_comment, updated_at];
+    let inputValues = [comment_id, new_comment, updated_at, updated_by];
 
 
-    let query = "UPDATE comments SET content = ($2), updated_at = ($3) WHERE id = ($1) RETURNING *";
+    let query = "UPDATE comments SET content = ($2), updated_at = ($3), updated_by = ($4) WHERE id = ($1) RETURNING *";
 
 
     dbPoolInstance.query(query, inputValues, (error, queryResult) => {

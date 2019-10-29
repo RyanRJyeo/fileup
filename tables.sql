@@ -42,7 +42,8 @@ CREATE TABLE IF NOT EXISTS comments(
 	user_name TEXT,
 	content TEXT,
 	created_at TIMESTAMPTZ DEFAULT now(),
-	updated_at TEXT
+	updated_at TEXT,
+	updated_by TEXT
 );
 
 

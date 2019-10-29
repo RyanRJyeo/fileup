@@ -39,6 +39,7 @@ class Case extends React.Component {
             let comment_id = parseInt(x.id);
             let case_id = x.case_id;
             let name = x.user_name;
+            let update_name = x.updated_by
             let content = x.content;
             let created = x.created_at;
             let date = `${created.getFullYear()}/${created.getMonth() + 1}/${created.getDate()}`;
@@ -49,7 +50,7 @@ class Case extends React.Component {
                 let upDate = `${updating.getFullYear()}/${updating.getMonth() + 1}/${updating.getDate()}`;
                 let upTime = `${updating.getHours()}:` + `${updating.getMinutes()}:${updating.getSeconds()}`;
                 updated_at =    <div>
-                                    <span className="lead mr-4">Updated by {name}</span><br/><span className="mr-2">{upDate}</span><span>{upTime}</span>
+                                    <span className="lead mr-4">Updated by {update_name}</span><br/><span className="mr-2">{upDate}</span><span>{upTime}</span>
                                 </div>
             } else {
                 updated_at = null;

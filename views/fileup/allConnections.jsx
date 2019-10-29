@@ -22,7 +22,7 @@ class AllConnections extends React.Component {
             let option;
             if (this.props.cases){
                 option = this.props.cases.map(x=>{
-                    let case_id = x.id
+                    let case_id = x.case_id
                     let case_name = x.name
 
                     return <option value={case_id}>{case_name}</option>

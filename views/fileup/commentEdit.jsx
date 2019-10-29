@@ -25,10 +25,10 @@ class CommentEdit extends React.Component {
             <div className="container mt-5">
                 <form className="col align-self-center" method='POST' action={"/caseCommentsEdit/" + this.props.results[0].case_id}>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" readonly="true" name="comment_id" value={this.props.results[0].id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="comment_id" value={this.props.results[0].id} required/>
                   </div>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" readonly="true" name="case_id" value={this.props.results[0].case_id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="case_id" value={this.props.results[0].case_id} required/>
                   </div>
                   <div className="form-group">
                     <p>Created at:</p>

@@ -299,9 +299,9 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, cases) => {
-                let verifyUser = parseInt(cases[0].users_id);
+                let verifyUser = new Set(cases.map(x=>x.users_id))
                 let verifyUser2 = parseInt(user_id);
-                if (verifyUser === verifyUser2){
+                if (verifyUser.has(verifyUser2)){
                     db.fileup.getPreference(cases[0].case_id, (error, preference)=>{
                         db.fileup.getComments(cases[0].case_id, (err, comments)=>{
 
@@ -337,9 +337,10 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
-                let verifyUser = parseInt(results[0].users_id);
+
+                let verifyUser = new Set(results.map(x=>x.users_id))
                 let verifyUser2 = parseInt(user_id);
-                if (verifyUser === verifyUser2){
+                if (verifyUser.has(verifyUser2)){
 
                         response.render('fileup/caseEdit', {results});
 
@@ -390,9 +391,10 @@ let requestCaseID;
 
         if( request.cookies['hasLoggedIn'] === hashedValue){
             db.fileup.getOneCase(requestCaseID, (error, results) => {
-                let verifyUser = parseInt(results[0].users_id);
+
+                let verifyUser = new Set(results.map(x=>x.users_id))
                 let verifyUser2 = parseInt(user_id);
-                if (verifyUser === verifyUser2){
+                if (verifyUser.has(verifyUser2)){
                     db.fileup.getPreference(requestCaseID, (err, preferences)=>{
 
                         let data = {
@@ -477,9 +479,10 @@ let requestCaseID;
 
     if( request.cookies['hasLoggedIn'] === hashedValue){
         db.fileup.getOneCase(requestCaseID, (error, cases) => {
-            let verifyUser = parseInt(cases[0].users_id);
+
+            let verifyUser = new Set(cases.map(x=>x.users_id))
             let verifyUser2 = parseInt(user_id);
-            if (verifyUser === verifyUser2){
+            if (verifyUser.has(verifyUser2)){
                 let comment_id = requestCommentID;
                 db.fileup.getCommentEditPage(comment_id, (error, results) => {
 
@@ -512,7 +515,9 @@ let requestCaseID;
             let case_id = request.body.case_id;
             let new_comment = request.body.new_comment;
             let updated_at = Date(Date.now());
-            db.fileup.getCommentEdited(comment_id, new_comment, updated_at, (error, results) => {
+            let updated_by = request.cookies['user_name'];
+
+            db.fileup.getCommentEdited(comment_id, new_comment, updated_at, updated_by, (error, results) => {
 
                 response.redirect('/case/'+case_id);
 
@@ -757,7 +762,7 @@ let shareMessage;
                         cases: cases,
                         shareMessage: shareMessage
                     };
-
+                    console.log(data)
                     setTimeout(function(){shareMessage = null}, 200);
                     response.render('fileup/allConnections', data)
                 });
