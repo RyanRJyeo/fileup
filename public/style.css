@@ -45,14 +45,14 @@ body{
 
 .profilePic{
 	max-width: 14rem;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
 }
 
 .editProfilePic{
 	max-width: 12rem;
 	margin: 0 auto;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 }
 
 .details{
