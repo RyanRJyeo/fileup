@@ -6,8 +6,8 @@ var cloudinary = require('cloudinary');
 
 module.exports = (db) => {
 
-    // let SALT = process.env.SALT
-    let SALT = "23891289814893748274723470234809"
+    let SALT = process.env.SALT
+
     let tempUser;
     let alertUser;
 
