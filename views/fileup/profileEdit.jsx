@@ -33,7 +33,7 @@ class ProfileEdit extends React.Component {
             <div className="container mt-5">
                 <h1 className="text-center mt-5">Edit Your Profile</h1>
                 <a className="row justify-content-center">
-                    <img type="button" data-toggle="modal" data-target="#profilePic" className="img-thumbnail editProfilePic" src={this.props.results[0].image}/>
+                    <img data-toggle="modal" data-target="#profilePic" className="btn img-thumbnail editProfilePic" src={this.props.results[0].image}/>
                 </a>
 
                 <form className="col align-self-center" method='POST' action='/profileEdit'>
