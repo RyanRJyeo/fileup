@@ -57,9 +57,9 @@ https://magazine.fbk.eu/wp-content/uploads/2017/09/icona.jpg
 
 
 
-## WDI Unit 2 Post Mortem (for instructors reference)
+## (For Instructors References)
 
-#Approach and Process
+# Approach and Process
 
 What in my process and approach to this project would I do differently next time?
 
@@ -78,7 +78,7 @@ Got potential user inputs and work on the project based on those inputs. Finally
 
 
 
-#Code and Code Design
+# Code and Code Design
 
 What in my code and program design in the project would I do differently next time?
 
@@ -147,4 +147,28 @@ What in my code and program design in the project went well? Is there anything I
 																				);
 
 	This is a simple set up of relationships among multiple tables, yet by using this in my app, i was able to share content with other users, and have the content displayed the same way across all the users. Very useful
+```
+
+
+
+
+# WDI Unit 2 Post Mortem
+
+What habits did I use during this unit that helped me?
+```
+	- worked on the project based on a mobile friendly first approach
+	- got user inputs to work on my user stories
+	- separated my mvp and my furthers clearly so as to pace myself
+```
+
+
+What habits did I have during this unit that I can improve on?
+```
+	my further was hinging on one function (the part on searching the users), if the buttons were not displaying correctly for each type of user (friends, people I've sent an invite to, people who sent me an invite, complete strangers), I would have threw away the whole further. Perhaps in the future I can think of furthers that are more flexible, and a user story flow that is not so rigid.
+```
+
+
+How is the overall level of the course during this unit? (instruction, course materials, etc.)
+```
+	Very tough unit, learning ways of doing something we sort of already know (html, css) but in a different way. Very challenging but the knowledge and experienced gained after finally understanding this unit outweighs the difficulty of it.
 ```
