@@ -59,7 +59,7 @@ https://magazine.fbk.eu/wp-content/uploads/2017/09/icona.jpg
 
 ## (For Instructors References)
 
-# Approach and Process
+### Approach and Process
 
 What in my process and approach to this project would I do differently next time?
 
@@ -78,7 +78,7 @@ Got potential user inputs and work on the project based on those inputs. Finally
 
 
 
-# Code and Code Design
+### Code and Code Design
 
 What in my code and program design in the project would I do differently next time?
 
@@ -152,7 +152,7 @@ What in my code and program design in the project went well? Is there anything I
 
 
 
-# WDI Unit 2 Post Mortem
+### WDI Unit 2 Post Mortem
 
 What habits did I use during this unit that helped me?
 ```
