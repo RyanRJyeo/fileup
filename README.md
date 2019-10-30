@@ -118,33 +118,33 @@ What in my code and program design in the project would I do differently next ti
 What in my code and program design in the project went well? Is there anything I would do the same next time?
 
 ```
-																				CREATE TABLE IF NOT EXISTS users(
-																					id SERIAL PRIMARY KEY,
-																					name TEXT,
-																					email TEXT UNIQUE,
-																					company_name TEXT,
-																					password TEXT,
-																					image TEXT
-																				);
+		CREATE TABLE IF NOT EXISTS users(
+			id SERIAL PRIMARY KEY,
+			name TEXT,
+			email TEXT UNIQUE,
+			company_name TEXT,
+			password TEXT,
+			image TEXT
+		);
 
 
 
-																				CREATE TABLE IF NOT EXISTS user_cases(
-																					id SERIAL PRIMARY KEY,
-																					users_id INTEGER,
-																					case_id INTEGER,
-																					UNIQUE (users_id, case_id)
-																				);
+		CREATE TABLE IF NOT EXISTS user_cases(
+			id SERIAL PRIMARY KEY,
+			users_id INTEGER,
+			case_id INTEGER,
+			UNIQUE (users_id, case_id)
+		);
 
 
 
-																				CREATE TABLE IF NOT EXISTS cases(
-																					id SERIAL PRIMARY KEY,
-																					creator_id INTEGER,
-																					name VARCHAR(20),
-																					age INTEGER,
-																					contact VARCHAR(20)
-																				);
+		CREATE TABLE IF NOT EXISTS cases(
+			id SERIAL PRIMARY KEY,
+			creator_id INTEGER,
+			name VARCHAR(20),
+			age INTEGER,
+			contact VARCHAR(20)
+		);
 
 	This is a simple set up of relationships among multiple tables, yet by using this in my app, i was able to share content with other users, and have the content displayed the same way across all the users. Very useful
 ```
