@@ -45,7 +45,7 @@ class Register extends React.Component {
                     <input type="password" className="form-control rounded" id="password" name="password" placeholder="Password" required/>
                   </div>
                   <div className="form-group">
-                    <input type="password" className="form-control rounded d-none" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required/>
+                    <input type="password" className="form-control rounded" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required/>
                   </div>
                   <div className="form-group">
                     <input type="text" className="form-control d-none" name="image" value="https://magazine.fbk.eu/wp-content/uploads/2017/09/icona.jpg" required/>
@@ -64,7 +64,7 @@ class Register extends React.Component {
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
+        <script src="password.js"></script>
         </body>
       </html>
     );

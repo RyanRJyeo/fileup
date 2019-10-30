@@ -1,4 +1,6 @@
 
+
+
 let counterOne = 0;
 let counterTwo = 0;
 
@@ -99,30 +101,3 @@ requestTwo.send();
 
     console.log(counterOne)
     console.log(counterTwo)
-
-
-
-
-
-
-
-
-var password = document.getElementById("password")
-  , confirm_password = document.getElementById("confirm_password");
-
-function validatePassword(){
-  if(password.value != null){
-    confirm_password.classList.remove("d-none");
-  }
-
-
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Passwords Don't Match");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
-
-
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;

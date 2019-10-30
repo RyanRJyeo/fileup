@@ -51,9 +51,6 @@ body{
 	max-width: 12rem !important;
 	max-height: 14rem !important;
 	margin: 0 auto;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
 }
 
 .details{
