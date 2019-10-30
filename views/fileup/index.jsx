@@ -46,33 +46,60 @@ class Home extends React.Component {
 
 
           {alertUser}
-          <div className="editProfile">
-                <a className="btn btn-warning btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
-          </div>
-          <div className="profile">
-                <img className="img-thumbnail profilePic mb-5"src={this.props.user[0].image}/>
-                <div className="details">
-                    <section className="text-center">
-                        <p><u>Name:</u></p>
-                        <p className="lead warning">{this.props.user[0].name}</p>
-                    </section>
-                    <section className="text-center mt-5">
-                        <p><u>Email:</u></p>
-                        <p className="lead warning">{this.props.user[0].email}</p>
-                    </section>
-                    <section className="text-center mt-5">
-                        <p><u>Company Name:</u></p>
-                        <p className="lead warning">{this.props.user[0].company_name}</p>
-                    </section>
-                </div>
-          </div>
 
-          <div className="cases container mb-5">
-                <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-warning btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
-                <div>
-                    {cases}
+
+
+
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header justify-content-center">
+                            <h2 class="modal-title" id="exampleModalLongTitle">Welcome To File<span className="yellow">Upp</span></h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body text-center">
+                                <h5>Your personal filing system right in the palm of your hands</h5>
+                                <br/>
+                                <p>Create Files: <button class="btn btn-warning btn-sm"><i class='bx bx-file'></i></button></p>
+                                <p>Edit: <button class="btn btn-warning btn-sm"><i class='bx bx-edit-alt' ></i></button></p>
+                                <p>Delete: <button class="btn btn-danger btn-sm"><i class='bx bxs-eraser' ></i></button></p>
+                          </div>
+                      </div>
+                  </div>
                 </div>
-          </div>
+
+              <div className="editProfile">
+
+                    <button type="button" class="btn btn-sm mr-3 mt-3 btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class='bx bx-info-circle'></i></button>
+                    <a className="btn btn-warning btn-sm mr-3 mt-3" href="/profileEdit" ><i class='bx bx-edit-alt' ></i></a>
+              </div>
+              <div className="profile">
+                    <img className="img-thumbnail profilePic mb-5"src={this.props.user[0].image}/>
+                    <div className="details">
+                        <section className="text-center">
+                            <p><u>Name:</u></p>
+                            <p className="lead warning">{this.props.user[0].name}</p>
+                        </section>
+                        <section className="text-center mt-5">
+                            <p><u>Email:</u></p>
+                            <p className="lead warning">{this.props.user[0].email}</p>
+                        </section>
+                        <section className="text-center mt-5">
+                            <p><u>Company Name:</u></p>
+                            <p className="lead warning">{this.props.user[0].company_name}</p>
+                        </section>
+                    </div>
+              </div>
+
+              <div className="container cases mb-5">
+                    <h3 className="mt-5"><u><span className="mr-3">Your Files</span><span><a href="/caseCreate" class="btn btn-warning btn-sm"><i class='bx bx-file'></i></a></span></u></h3>
+                    <div>
+                        {cases}
+                    </div>
+              </div>
+
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
