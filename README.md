@@ -1,13 +1,13 @@
 # FileUpp
 
 
+![fileup](https://raw.githubusercontent.com/RyanRJyeo/fileup/master/fileupp.herokuapp.com_.png?token=AM7DPIOAMLIDFSHV2TA4HLS5XEYGQ)
 
 
 
 
 ## Links
 Heroku Link: https://fileupp.herokuapp.com/
-GitHub Link: https://github.com/RyanRJyeo/fileup
 
 
 
@@ -18,9 +18,9 @@ The app was built based on a mobile-friendly-first approach. Making sure the app
 
 I've separated the project into two parts:
 
-	1. The MVP (minimum viable product). It consist of users logging in, changing their own profile information, creating case files, editing case files, commenting on those case files, updating those comments, and lastly deleting the case files.
+1. The MVP (minimum viable product). It consist of users logging in, changing their own profile information, creating case files, editing case files, commenting on those case files, updating those comments, and lastly deleting the case files.
 
-	2. The further (additional goals). It consist of users being able to add other users, and thereafter share the case files that they have created with their friends / teammates / supervisors / bosses. Thereafter all users sharing the same case files can edit, comment, update comments on those shared case files. Users can also delete this case files but it will only be removed from their own database, and not everyone else's databases.
+2. The further (additional goals). It consist of users being able to add other users, and thereafter share the case files that they have created with their friends / teammates / supervisors / bosses. Thereafter all users sharing the same case files can edit, comment, update comments on those shared case files. Users can also delete this case files but it will only be removed from their own database, and not everyone else's databases.
 
 
 This separation of project segments allowed me to pace myself accordingly as I worked on the project. 
